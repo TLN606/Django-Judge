@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>
+        {% block title %}
+            MiniJudge Classroom
+        {% endblock %}
+    </title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/custom-editor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/submissions.css' %}">
+
+    {% block extra_css %}
+    {% endblock %}
+
+
+
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    {% include 'partials/layout/_topbar.html' %}
+
+    {% include 'partials/layout/_navbar.html' %}
+
+    <main class="flex-grow-1">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    {% include 'partials/layout/_footer.html' %}
+
+    {% include 'partials/layout/_scripts.html' %}
+
+    {% block extra_js %}{% endblock %}
+
+
+
+</body>
+
+</html>

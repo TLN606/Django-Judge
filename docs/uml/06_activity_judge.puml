@@ -1,0 +1,37 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+title Quy trình chấm một bài nộp
+start
+:Nhận mã nguồn + danh sách Test Case;
+if (Ngôn ngữ được hỗ trợ?) then (không)
+  :system_error cho mọi Test Case;
+  stop
+endif
+:Biên dịch (C++: g++ -std=c++17 -O2\nPython: kiểm tra cú pháp);
+if (Biên dịch thành công?) then (không)
+  :compile_error cho mọi Test Case;
+else (có)
+  repeat
+    :Chạy chương trình với input\n(giới hạn thời gian, bộ nhớ);
+    if (Quá thời gian?) then (có)
+      :time_limit;
+    elseif (Mã thoát khác 0?) then (có)
+      :runtime_error;
+    elseif (Output khớp expected?) then (có)
+      :accepted;
+    else (không)
+      :wrong_answer;
+    endif
+  repeat while (Còn Test Case?) is (còn)
+endif
+:Xóa thư mục tạm;
+:Trạng thái = lỗi đầu tiên (hoặc accepted)\nĐiểm = số Test Case đạt / tổng × 100;
+:Lưu Submission và SubmissionResult;
+stop
+@enduml

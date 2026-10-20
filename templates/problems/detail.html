@@ -1,0 +1,703 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ problem.title }} - MiniJudge
+{% endblock %}
+
+{% block content %}
+
+<div class="problem-detail-page">
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section class="problem-detail-hero">
+
+        <div class="problem-hero-circle problem-hero-circle-right"></div>
+        <div class="problem-hero-circle problem-hero-circle-left"></div>
+
+        <div class="container">
+
+            <!-- Breadcrumb -->
+
+            <div class="problem-breadcrumb">
+
+                <a href="{% url 'classroom_list' %}">
+                    Classrooms
+                </a>
+
+                <i class="fa fa-angle-right"></i>
+
+                <a href="{% url 'classroom_detail' problem.classroom.id %}">
+                    {{ problem.classroom.name }}
+                </a>
+
+                <i class="fa fa-angle-right"></i>
+
+                <span>
+                    Problem
+                </span>
+
+            </div>
+
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <!-- Difficulty -->
+
+                    {% if problem.difficulty == 'easy' %}
+
+                        <span class="problem-difficulty problem-difficulty-hero difficulty-easy">
+                            Easy
+                        </span>
+
+                    {% elif problem.difficulty == 'medium' %}
+
+                        <span class="problem-difficulty problem-difficulty-hero difficulty-medium">
+                            Medium
+                        </span>
+
+                    {% else %}
+
+                        <span class="problem-difficulty problem-difficulty-hero difficulty-hard">
+                            Hard
+                        </span>
+
+                    {% endif %}
+
+
+                    <h1>
+                        {{ problem.title }}
+                    </h1>
+
+                    <p>
+                        {{ problem.classroom.name }}
+                    </p>
+
+                </div>
+
+
+                <!-- Limits -->
+
+                <div class="col-lg-4">
+
+                    <div class="problem-limits">
+
+                        <div class="problem-limit">
+
+                            <i class="fa fa-hourglass-half"></i>
+
+                            <div>
+
+                                <span>
+                                    Time Limit
+                                </span>
+
+                                <strong>
+                                    {{ problem.time_limit }} s
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="problem-limit">
+
+                            <i class="fa fa-database"></i>
+
+                            <div>
+
+                                <span>
+                                    Memory Limit
+                                </span>
+
+                                <strong>
+                                    {{ problem.memory_limit }} MB
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         PROBLEM CONTENT
+    ================================================== -->
+
+    <section class="problem-detail-content">
+
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Main Problem -->
+
+                <div class="col-lg-8">
+
+                    <div class="problem-content-card">
+
+                        <!-- Problem -->
+
+                        <div class="problem-content-section">
+
+                            <div class="problem-section-heading">
+
+                                <div class="problem-section-icon">
+                                    <i class="fa fa-code"></i>
+                                </div>
+
+                                <h2>
+                                    Problem
+                                </h2>
+
+                            </div>
+
+
+                            <div class="problem-text">
+
+                                {{ problem.description|linebreaks }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Input -->
+
+                        {% if problem.input_description %}
+
+                        <div class="problem-content-section">
+
+                            <div class="problem-section-heading">
+
+                                <div class="problem-section-icon">
+                                    <i class="fa fa-arrow-right"></i>
+                                </div>
+
+                                <h2>
+                                    Input
+                                </h2>
+
+                            </div>
+
+
+                            <div class="problem-text">
+
+                                {{ problem.input_description|linebreaks }}
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Output -->
+
+                        {% if problem.output_description %}
+
+                        <div class="problem-content-section">
+
+                            <div class="problem-section-heading">
+
+                                <div class="problem-section-icon">
+                                    <i class="fa fa-arrow-left"></i>
+                                </div>
+
+                                <h2>
+                                    Output
+                                </h2>
+
+                            </div>
+
+
+                            <div class="problem-text">
+
+                                {{ problem.output_description|linebreaks }}
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Constraints -->
+
+                        {% if problem.constraints %}
+
+                        <div class="problem-content-section">
+
+                            <div class="problem-section-heading">
+
+                                <div class="problem-section-icon">
+                                    <i class="fa fa-database"></i>
+                                </div>
+
+                                <h2>
+                                    Constraints
+                                </h2>
+
+                            </div>
+
+
+                            <div class="problem-text problem-constraints">
+
+                                {{ problem.constraints|linebreaks }}
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Sample Test Cases -->
+
+                        {% with samples=problem.test_cases.all %}
+
+                            {% if samples %}
+
+                            <div class="problem-content-section">
+
+                                <div class="problem-section-heading">
+
+                                    <div class="problem-section-icon">
+
+                                        <i class="fa fa-terminal"></i>
+
+                                    </div>
+
+                                    <h2>
+                                        Sample
+                                    </h2>
+
+                                </div>
+
+
+                                {% for test_case in samples %}
+
+                                    {% if test_case.is_sample %}
+
+                                    <div class="sample-test-case">
+
+                                        <div class="sample-test-header">
+
+                                            <span>
+                                                Sample {{ forloop.counter }}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="sample-test-grid">
+
+                                            <div class="sample-test-block">
+
+                                                <div class="sample-test-label">
+                                                    Input
+                                                </div>
+
+                                                <pre>{{ test_case.input_data }}</pre>
+
+                                            </div>
+
+
+                                            <div class="sample-test-block">
+
+                                                <div class="sample-test-label">
+                                                    Output
+                                                </div>
+
+                                                <pre>{{ test_case.expected_output }}</pre>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </div>
+
+                            {% endif %}
+
+                        {% endwith %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Sidebar -->
+
+                <div class="col-lg-4">
+
+                    <!-- Submit / Status -->
+
+                    <!-- Submit / Problem Status -->
+
+                <div class="problem-action-card">
+
+                    <div class="problem-action-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+
+                    <!-- ==================================================
+                        STUDENT - PUBLISHED
+                    ================================================== -->
+
+                    {% if user.role == 'student' and problem.status == 'published' %}
+
+                        <h3>
+                            Ready to code?
+                        </h3>
+
+                        <p>
+                            Submit your solution and let
+                            MiniJudge evaluate your code.
+                        </p>
+
+                        <a
+                            href="{% url 'submit_solution' problem.id %}"
+                            class="problem-submit-btn"
+                        >
+                            <i class="fa fa-paper-plane"></i>
+                            Submit Solution
+                        </a>
+
+                        <a
+                            href="{% url 'submission_list' problem.id %}"
+                            class="problem-history-btn"
+                        >
+                            <i class="fa fa-history"></i>
+                            My Submissions
+                        </a>
+
+
+                    <!-- ==================================================
+                        STUDENT - CLOSED
+                    ================================================== -->
+
+                    {% elif user.role == 'student' and problem.status == 'closed' %}
+
+                        <h3>
+                            Problem Closed
+                        </h3>
+
+                        <p>
+                            This problem is currently closed.
+                            New submissions are no longer accepted.
+                        </p>
+
+                        <div
+                            class="problem-submit-btn"
+                            style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
+                        >
+                            <i class="fa fa-lock"></i>
+                            Submission Closed
+                        </div>
+
+                        <a
+                            href="{% url 'submission_list' problem.id %}"
+                            class="problem-history-btn"
+                        >
+                            <i class="fa fa-history"></i>
+                            My Submissions
+                        </a>
+
+
+                    <!-- ==================================================
+                        TEACHER - DRAFT
+                    ================================================== -->
+
+                    {% elif user.role == 'teacher' and problem.status == 'draft' %}
+
+                        <h3>
+                            Draft Problem
+                        </h3>
+
+                        <p>
+                            This problem has not been published yet.
+                        </p>
+
+                        <!-- PUBLISH -->
+
+                        <form
+                            method="post"
+                            action="{% url 'publish_problem' problem.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="problem-submit-btn"
+                                style="border: none; width: 100%;"
+                            >
+                                <i class="fa fa-upload"></i>
+                                Publish Problem
+                            </button>
+
+                        </form>
+
+
+                    <!-- ==================================================
+                        TEACHER - PUBLISHED
+                    ================================================== -->
+
+                    {% elif user.role == 'teacher' and problem.status == 'published' %}
+
+                        <h3>
+                            Published Problem
+                        </h3>
+
+                        <p>
+                            Students can submit solutions
+                            to this problem.
+                        </p>
+
+                        <!-- CLOSE -->
+
+                        <form
+                            method="post"
+                            action="{% url 'close_problem' problem.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="problem-submit-btn"
+                                style="border: none; width: 100%;"
+                                onclick="return confirm('Close this problem? Students will no longer be able to submit solutions.');"
+                            >
+                                <i class="fa fa-lock"></i>
+                                Close Problem
+                            </button>
+
+                        </form>
+
+
+                    <!-- ==================================================
+                        TEACHER - CLOSED
+                    ================================================== -->
+
+                    {% elif user.role == 'teacher' and problem.status == 'closed' %}
+
+                        <h3>
+                            Problem Closed
+                        </h3>
+
+                        <p>
+                            Students can view this problem,
+                            but new submissions are disabled.
+                        </p>
+
+                        <!-- REOPEN -->
+
+                        <form
+                            method="post"
+                            action="{% url 'reopen_problem' problem.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="problem-submit-btn"
+                                style="border: none; width: 100%;"
+                            >
+                                <i class="fa fa-unlock"></i>
+                                Reopen Problem
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+
+                    <!-- ==================================================
+                        TEACHER - MANAGE TEST CASES
+                    ================================================== -->
+
+                    {% if user.role == 'teacher' or user.is_superuser %}
+
+                        <a
+                            href="{% url 'test_case_list' problem.id %}"
+                            class="problem-manage-btn"
+                        >
+                            <i class="fa fa-flask"></i>
+                            Manage Test Cases
+                        </a>    
+                        
+                        <a
+                            href="{% url 'submission_list' problem.id %}"
+                            class="problem-manage-btn"
+                        >
+                            <i class="fa fa-users"></i>
+                            Student Submissions
+                        </a>
+                        
+
+                                                <a
+                            href="{% url 'edit_problem' problem.id %}"
+                            class="problem-manage-btn"
+                        >
+                            <i class="fa fa-edit"></i>
+                            Edit Problem
+                        </a>
+
+                        <a
+                            href="{% url 'export_problem_package' problem.id %}"
+                            class="problem-manage-btn"
+                        >
+                            <i class="fa fa-download"></i>
+                            Export Package
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+                    <!-- Information -->
+
+                    <div class="problem-info-card">
+
+                        <div class="problem-info-title">
+
+                            <i class="fa fa-info-circle"></i>
+
+                            Problem Information
+
+                        </div>
+
+
+                        <div class="problem-info-row">
+
+                            <span>
+                                Classroom
+                            </span>
+
+                            <strong>
+                                {{ problem.classroom.name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="problem-info-row">
+
+                            <span>
+                                Difficulty
+                            </span>
+
+                            <strong class="problem-info-difficulty">
+
+                                {{ problem.get_difficulty_display }}
+
+                            </strong>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="problem-info-row">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong>
+
+                                {% if problem.status == 'draft' %}
+
+                                    Draft
+
+                                {% elif problem.status == 'published' %}
+
+                                    Published
+
+                                {% else %}
+
+                                    Closed
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="problem-info-row">
+
+                            <span>
+                                Created by
+                            </span>
+
+                            <strong>
+                                {{ problem.created_by.username }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="problem-info-row">
+
+                            <span>
+                                Created
+                            </span>
+
+                            <strong>
+                                {{ problem.created_at|date:"M d, Y" }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Back -->
+
+                    <a
+                        href="{% url 'classroom_detail' problem.classroom.id %}"
+                        class="problem-back-btn"
+                    >
+
+                        <i class="fa fa-arrow-left"></i>
+
+                        Back to Classroom
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam classAttributeIconSize 0
+hide empty members
+skinparam nodesep 25
+skinparam ranksep 35
+
+class User {
+  +username
+  +email
+  +role : teacher | student
+}
+class Classroom {
+  +name
+  +code {unique}
+  +description
+}
+class ClassroomMember {
+  +joined_at
+}
+class ClassroomBan {
+  +reason
+  +is_active
+}
+class Problem {
+  +title
+  +difficulty
+  +status : draft | published | closed
+  +time_limit
+  +memory_limit
+}
+class TestCase {
+  +input_data
+  +expected_output
+  +is_sample
+}
+class ProblemAttempt {
+  +status : available | locked
+  +attempt_count
+  +reset_count
+  +can_submit()
+}
+class Submission {
+  +language : cpp | python
+  +source_code
+  +status
+  +score
+  +execution_time
+}
+class SubmissionResult {
+  +status
+  +execution_time
+  +actual_output
+}
+class JudgeService {
+  +judge_all(source, tests, ...)
+}
+class ProgramExecutor {
+  +execute(command, input, ...)
+}
+class OutputChecker {
+  +check(expected, actual)
+}
+class Compiler <<CppCompiler / PythonCompiler>> {
+  +compile(source)
+}
+
+User "1" -- "*" Classroom : dạy
+Classroom "1" *-- "*" ClassroomMember
+User "1" -- "*" ClassroomMember : học
+Classroom "1" *-- "*" ClassroomBan
+Classroom "1" *-- "*" Problem
+Problem "1" *-- "1..*" TestCase
+Problem "1" *-- "*" ProblemAttempt
+User "1" -- "*" ProblemAttempt
+ProblemAttempt "1" o-- "*" Submission
+User "1" -- "*" Submission : nộp
+Submission "1" *-- "*" SubmissionResult
+TestCase "1" -- "*" SubmissionResult
+Submission ..> JudgeService : chấm bởi
+JudgeService --> Compiler
+JudgeService --> ProgramExecutor
+JudgeService --> OutputChecker
+@enduml

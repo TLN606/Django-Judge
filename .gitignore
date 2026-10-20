@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Django
+db.sqlite3
+staticfiles/
+media/
+.env
+
+# Công cụ
+.coverage
+htmlcov/
+.idea/
+.vscode/
+*.log

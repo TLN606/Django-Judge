@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <!-- Background -->
+    <div class="login-background">
+
+        <div class="login-glow login-glow-1"></div>
+        <div class="login-glow login-glow-2"></div>
+
+        <div class="login-grid"></div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="login-wrapper">
+
+            <!-- Left side -->
+            <div class="login-intro">
+
+                <div class="login-logo">
+
+                    <div class="login-logo-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+                    <span>MiniJudge</span>
+
+                </div>
+
+
+                <span class="login-eyebrow">
+                    <i class="fa fa-terminal"></i>
+                    ONLINE JUDGE PLATFORM
+                </span>
+
+
+                <h1>
+                    Code.
+                    <span>Learn.</span>
+                    <br>
+                    Compete.
+                </h1>
+
+
+                <p>
+                    Join your classroom, solve programming problems
+                    and improve your coding skills with MiniJudge.
+                </p>
+
+
+                <div class="login-features">
+
+                    <div class="login-feature">
+
+                        <div class="login-feature-icon">
+                            <i class="fa fa-code"></i>
+                        </div>
+
+                        <div>
+                            <strong>Programming Problems</strong>
+                            <span>Practice real coding challenges</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-feature">
+
+                        <div class="login-feature-icon">
+                            <i class="fa fa-check-circle"></i>
+                        </div>
+
+                        <div>
+                            <strong>Automatic Judge</strong>
+                            <span>Get instant submission results</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-feature">
+
+                        <div class="login-feature-icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+
+                        <div>
+                            <strong>Classroom</strong>
+                            <span>Learn and practice together</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Login card -->
+            <div class="login-card">
+
+                <div class="login-card-top">
+
+                    <div class="login-card-icon">
+                        <i class="fa fa-terminal"></i>
+                    </div>
+
+                    <div>
+
+                        <span class="login-card-label">
+                            WELCOME BACK
+                        </span>
+
+                        <h2>
+                            Sign in
+                        </h2>
+
+                        <p>
+                            Enter your account details to continue.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if form.errors %}
+
+                    <div class="login-error">
+
+                        <i class="fa fa-exclamation-circle"></i>
+
+                        <div>
+                            <strong>Login failed</strong>
+                            <span>
+                                Username or password is incorrect.
+                            </span>
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <form method="post" class="login-form">
+
+                    {% csrf_token %}
+
+
+                    <div class="login-field">
+
+                        <label for="id_username">
+                            Username
+                        </label>
+
+                        <div class="login-input">
+
+                            <i class="fa fa-user"></i>
+
+                            <input
+                                type="text"
+                                name="username"
+                                id="id_username"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-field">
+
+                        <label for="id_password">
+                            Password
+                        </label>
+
+                        <div class="login-input">
+
+                            <i class="fa fa-lock"></i>
+
+                            <input
+                                type="password"
+                                name="password"
+                                id="id_password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-submit"
+                    >
+
+                        <span>
+                            Sign In
+                        </span>
+
+                        <i class="fa fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+                <div class="login-register-link">
+
+                    Don't have an account?
+
+                    <a href="{% url 'register' %}">
+                        Create one
+                    </a>
+
+                </div>
+
+                <div class="login-card-footer">
+
+                    <i class="fa fa-shield"></i>
+
+                    Secure access to your MiniJudge account
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

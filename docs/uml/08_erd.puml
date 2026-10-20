@@ -1,0 +1,113 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+hide circle
+skinparam linetype ortho
+entity accounts_user {
+  *id : bigint <<PK>>
+  --
+  username : varchar <<UQ>>
+  email : varchar
+  password : varchar
+  role : varchar
+  ...
+}
+entity classrooms_classroom {
+  *id : bigint <<PK>>
+  --
+  name : varchar
+  code : varchar <<UQ>>
+  description : text
+  teacher_id : bigint <<FK>>
+  created_at : timestamp
+}
+entity classrooms_classroommember {
+  *id : bigint <<PK>>
+  --
+  classroom_id : bigint <<FK>>
+  student_id : bigint <<FK>>
+  joined_at : timestamp
+}
+entity classrooms_classroomban {
+  *id : bigint <<PK>>
+  --
+  classroom_id : bigint <<FK>>
+  student_id : bigint <<FK>>
+  banned_by_id : bigint <<FK>>
+  reason : text
+  is_active : boolean
+  banned_at : timestamp
+  unbanned_at : timestamp
+}
+entity problems_problem {
+  *id : bigint <<PK>>
+  --
+  classroom_id : bigint <<FK>>
+  created_by_id : bigint <<FK>>
+  title : varchar
+  description : text
+  difficulty : varchar
+  status : varchar
+  time_limit : float
+  memory_limit : int
+}
+entity problems_testcase {
+  *id : bigint <<PK>>
+  --
+  problem_id : bigint <<FK>>
+  input_data : text
+  expected_output : text
+  is_sample : boolean
+}
+entity problems_problemattempt {
+  *id : bigint <<PK>>
+  --
+  problem_id : bigint <<FK>>
+  student_id : bigint <<FK>>
+  status : varchar
+  attempt_count : int
+  reset_count : int
+  last_reset_by_id : bigint <<FK>>
+}
+entity submissions_submission {
+  *id : bigint <<PK>>
+  --
+  problem_id : bigint <<FK>>
+  attempt_id : bigint <<FK>>
+  user_id : bigint <<FK>>
+  language : varchar
+  source_code : text
+  status : varchar
+  score : float
+  execution_time : float
+  judged_at : timestamp
+}
+entity submissions_submissionresult {
+  *id : bigint <<PK>>
+  --
+  submission_id : bigint <<FK>>
+  test_case_id : bigint <<FK>>
+  status : varchar
+  execution_time : float
+  actual_output : text
+}
+accounts_user ||--o{ classrooms_classroom
+classrooms_classroom ||--o{ classrooms_classroommember
+accounts_user ||--o{ classrooms_classroommember
+classrooms_classroom ||--o{ classrooms_classroomban
+accounts_user ||--o{ classrooms_classroomban
+classrooms_classroom ||--o{ problems_problem
+problems_problem ||--o{ problems_testcase
+problems_problem ||--o{ problems_problemattempt
+accounts_user ||--o{ problems_problemattempt
+problems_problemattempt ||--o{ submissions_submission
+problems_problem ||--o{ submissions_submission
+accounts_user ||--o{ submissions_submission
+submissions_submission ||--o{ submissions_submissionresult
+problems_testcase ||--o{ submissions_submissionresult
+@enduml

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create Classroom - MiniJudge
+{% endblock %}
+
+{% block content %}
+
+<div class="classroom-page">
+
+    <!-- HERO -->
+    <section class="classroom-hero classroom-create-hero">
+        <div class="container classroom-hero-container">
+
+            <div class="classroom-eyebrow">
+                MiniJudge Classroom
+            </div>
+
+            <h1>
+                Create Classroom
+            </h1>
+
+            <p>
+                Create a learning environment for your students
+                and start building programming activities.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- FORM -->
+    <section class="classroom-section classroom-create-section">
+
+        <div class="container classroom-section-container">
+
+            <div class="classroom-form-card">
+
+                <div class="classroom-form-header">
+
+                    <div>
+                        <div class="classroom-section-eyebrow">
+                            Classroom Management
+                        </div>
+
+                        <h2>
+                            New Classroom
+                        </h2>
+                    </div>
+
+                    <a
+                        href="{% url 'classroom_list' %}"
+                        class="classroom-back-btn"
+                    >
+                        <i class="fa fa-arrow-left"></i>
+                        Back
+                    </a>
+
+                </div>
+
+
+                <form method="post" class="classroom-form">
+
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="classroom-form-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+
+                    <!-- NAME -->
+                    <div class="classroom-form-group">
+
+                        <label for="{{ form.name.id_for_label }}">
+                            Classroom Name
+                        </label>
+
+                        {{ form.name }}
+
+                        {% if form.name.errors %}
+                            <div class="classroom-field-error">
+                                {{ form.name.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+                    <div class="classroom-form-group">
+
+                        <label for="{{ form.description.id_for_label }}">
+                            Description
+                        </label>
+
+                        {{ form.description }}
+
+                        {% if form.description.errors %}
+                            <div class="classroom-field-error">
+                                {{ form.description.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+                    <div class="classroom-form-actions">
+
+                        <a
+                            href="{% url 'classroom_list' %}"
+                            class="classroom-cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="classroom-submit-btn"
+                        >
+                            <i class="fa fa-plus"></i>
+                            Create Classroom
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

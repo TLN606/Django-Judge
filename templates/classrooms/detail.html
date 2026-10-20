@@ -1,0 +1,757 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ classroom.name }} - MiniJudge
+{% endblock %}
+
+{% block content %}
+
+<div class="classroom-detail-page">
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section class="classroom-detail-hero">
+
+        <div class="classroom-detail-hero-circle"></div>
+
+        <div class="container">
+
+            <div class="classroom-detail-breadcrumb">
+
+                <a href="{% url 'classroom_list' %}">
+                    <i class="fa fa-arrow-left mr-2"></i>
+                    Classrooms
+                </a>
+
+                <span>/</span>
+
+                <span>
+                    {{ classroom.name }}
+                </span>
+
+            </div>
+
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <span class="classroom-detail-badge">
+                        CLASSROOM
+                    </span>
+
+                    <h1>
+                        {{ classroom.name }}
+                    </h1>
+
+                    {% if classroom.description %}
+
+                        <p>
+                            {{ classroom.description }}
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            Programming classroom for
+                            learning and practicing coding.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                    <div class="classroom-detail-code-card">
+
+                        <span>
+                            CLASS CODE
+                        </span>
+
+                        <strong>
+                            {{ classroom.code }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CONTENT
+    ================================================== -->
+
+    <section class="classroom-detail-content">
+
+        <div class="container">
+
+            <div class="row">
+
+
+                <!-- ==================================================
+                     LEFT COLUMN
+                ================================================== -->
+
+                <div class="col-lg-8 mb-4">
+
+
+                    <!-- ==================================================
+                         CLASSROOM ACTIVITIES
+                    ================================================== -->
+
+                    <div class="classroom-detail-main-card">
+
+                        <!-- HEADER -->
+
+                        <div class="detail-card-header">
+
+                            <div>
+
+                                <span>
+                                    LEARNING
+                                </span>
+
+                                <h2>
+                                    Classroom Activities
+                                </h2>
+
+                            </div>
+
+                            <div class="detail-card-icon">
+
+                                <i class="fa fa-code"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             PROGRAMMING PROBLEMS
+                        ================================================== -->
+
+                        <div class="detail-problems-section">
+
+                            <div class="detail-problems-header">
+
+                                <div>
+
+                                    <span>
+                                        PRACTICE
+                                    </span>
+
+                                    <h3>
+                                        Programming Problems
+                                    </h3>
+
+                                </div>
+
+
+                                <div class="detail-problems-actions">
+
+                                    {% if user.role == 'teacher' and classroom.teacher == user %}
+
+                                        <a
+                                            href="{% url 'create_problem' classroom.id %}"
+                                            class="classroom-create-problem-btn"
+                                        >
+                                            <i class="fa fa-plus"></i>
+                                            Create Problem
+                                        </a>
+
+                                    {% endif %}
+
+
+                                    <div class="detail-problems-count">
+
+                                        {{ problems|length }}
+
+                                        <small>
+                                            Problems
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {% for problem in problems %}
+
+                                <a
+                                    href="{% url 'problem_detail' problem.id %}"
+                                    class="detail-problem-item"
+                                >
+
+                                    <div class="detail-problem-icon">
+
+                                        <i class="fa fa-code"></i>
+
+                                    </div>
+
+
+                                    <div class="detail-problem-content">
+
+                                        <div class="detail-problem-top">
+
+                                            <h4>
+                                                {{ problem.title }}
+                                            </h4>
+
+
+                                            {% if problem.difficulty == 'easy' %}
+
+                                                <span class="problem-difficulty difficulty-easy">
+                                                    Easy
+                                                </span>
+
+                                            {% elif problem.difficulty == 'medium' %}
+
+                                                <span class="problem-difficulty difficulty-medium">
+                                                    Medium
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="problem-difficulty difficulty-hard">
+                                                    Hard
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <p>
+                                            {{ problem.description|truncatewords:20 }}
+                                        </p>
+
+
+                                        <div class="detail-problem-meta">
+
+                                            <span>
+                                                <i class="fa fa-clock-o mr-1"></i>
+                                                {{ problem.time_limit }}s
+                                            </span>
+
+                                            <span>
+                                                <i class="fa fa-database mr-1"></i>
+                                                {{ problem.memory_limit }} MB
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="detail-problem-arrow">
+
+                                        <i class="fa fa-arrow-right"></i>
+
+                                    </div>
+
+                                </a>
+
+
+                            {% empty %}
+
+                                <div class="detail-problems-empty">
+
+                                    <div class="detail-problems-empty-icon">
+
+                                        <i class="fa fa-code"></i>
+
+                                    </div>
+
+                                    <h4>
+                                        No Problems Yet
+                                    </h4>
+
+                                    <p>
+                                        Your instructor has not added any
+                                        programming problems to this classroom yet.
+                                    </p>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             ASSIGNMENTS
+                        ================================================== -->
+
+                        <div class="detail-feature">
+
+                            <div class="detail-feature-icon">
+
+                                <i class="fa fa-tasks"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Assignments
+                                </h4>
+
+                                <p>
+                                    Complete programming assignments
+                                    provided by your instructor.
+                                </p>
+
+                                <span class="detail-coming-soon">
+                                    Coming Soon
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             ANNOUNCEMENTS
+                        ================================================== -->
+
+                        <div class="detail-feature">
+
+                            <div class="detail-feature-icon">
+
+                                <i class="fa fa-bullhorn"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Announcements
+                                </h4>
+
+                                <p>
+                                    Important announcements and
+                                    classroom information will appear here.
+                                </p>
+
+                                <span class="detail-coming-soon">
+                                    Coming Soon
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     RIGHT SIDEBAR
+                ================================================== -->
+
+                <div class="col-lg-4 mb-4">
+
+
+                    <!-- ==================================================
+                         INSTRUCTOR
+                    ================================================== -->
+
+                    <div class="classroom-detail-side-card">
+
+                        <div class="side-card-title">
+
+                            <i class="fa fa-user"></i>
+
+                            Instructor
+
+                        </div>
+
+
+                        <div class="side-instructor">
+
+                            <div class="side-instructor-avatar">
+
+                                {{ classroom.teacher.username|first|upper }}
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ classroom.teacher.username }}
+                                </strong>
+
+                                <span>
+                                    Teacher
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         CLASSROOM INFORMATION
+                    ================================================== -->
+
+                    <div class="classroom-detail-side-card">
+
+                        <div class="side-card-title">
+
+                            <i class="fa fa-info-circle"></i>
+
+                            Classroom Information
+
+                        </div>
+
+
+                        <div class="side-info">
+
+                            <span>
+                                Classroom
+                            </span>
+
+                            <strong>
+                                {{ classroom.name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="side-info">
+
+                            <span>
+                                Class Code
+                            </span>
+
+                            <strong class="side-code">
+                                {{ classroom.code }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="side-info">
+
+                            <span>
+                                Students
+                            </span>
+
+                            <strong>
+                                {{ members|length }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="side-info">
+
+                            <span>
+                                Created
+                            </span>
+
+                            <strong>
+                                {{ classroom.created_at|date:"M d, Y" }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         BACK
+                    ================================================== -->
+
+                    <a
+                        href="{% url 'classroom_list' %}"
+                        class="classroom-back-btn"
+                    >
+
+                        <i class="fa fa-arrow-left"></i>
+
+                        Back to Classrooms
+
+                    </a>
+
+
+                    <!-- ==================================================
+                         CLASSROOM MEMBERS
+                    ================================================== -->
+
+                    <div class="classroom-members-card classroom-members-sidebar">
+
+                        <div class="classroom-members-header">
+
+                            <div>
+
+                                <div class="classroom-section-eyebrow">
+                                    Classroom
+                                </div>
+
+                                <h2>
+                                    Members
+                                </h2>
+
+                            </div>
+
+                            <div class="classroom-members-count">
+                                {{ members|length }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="classroom-members-list">
+
+                            {% for member in members|slice:":5" %}
+
+                                <div class="classroom-member-row">
+
+                                    <div class="classroom-member-info">
+
+                                        <div class="classroom-member-avatar">
+                                            {{ member.student.username|first|upper }}
+                                        </div>
+
+                                        <div>
+
+                                            <div class="classroom-member-name">
+                                                {{ member.student.username }}
+                                            </div>
+
+                                            <div class="classroom-member-date">
+                                                Joined {{ member.joined_at|date:"M d, Y" }}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {% if user.is_superuser or classroom.teacher == user %}
+
+                                        <div class="classroom-member-actions">
+
+                                            <!-- KICK -->
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'kick_member' classroom.id member.student.id %}"
+                                                onsubmit="return confirm('Kick this student from the classroom?');"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="member-action-btn member-kick-btn"
+                                                    title="Kick"
+                                                >
+                                                    <i class="fa fa-user-minus"></i>
+                                                </button>
+
+                                            </form>
+
+
+                                            <!-- BAN -->
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'ban_member' classroom.id member.student.id %}"
+                                                onsubmit="return confirm('Ban this student from the classroom?');"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="member-action-btn member-ban-btn"
+                                                    title="Ban"
+                                                >
+                                                    <i class="fa fa-ban"></i>
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+                            {% empty %}
+
+                                <div class="classroom-members-empty">
+
+                                    <i class="fa fa-users"></i>
+
+                                    <p>
+                                        No students yet.
+                                    </p>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        {% if members|length > 5 %}
+
+                            <div class="classroom-members-footer">
+
+                                Showing
+                                <strong>5</strong>
+                                of
+                                <strong>{{ members|length }}</strong>
+                                students
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         BANNED STUDENTS
+                    ================================================== -->
+
+                    {% if user.is_superuser or classroom.teacher == user %}
+
+                        <div class="classroom-members-card classroom-banned-card">
+
+                            <div class="classroom-members-header">
+
+                                <div>
+
+                                    <div class="classroom-section-eyebrow">
+                                        Access Control
+                                    </div>
+
+                                    <h2>
+                                        Banned
+                                    </h2>
+
+                                </div>
+
+                                <div class="classroom-members-count classroom-banned-count">
+                                    {{ banned_members|length }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="classroom-members-list">
+
+                                {% for ban in banned_members|slice:":3" %}
+
+                                    <div class="classroom-member-row">
+
+                                        <div class="classroom-member-info">
+
+                                            <div class="classroom-member-avatar banned-avatar">
+
+                                                {{ ban.student.username|first|upper }}
+
+                                            </div>
+
+                                            <div>
+
+                                                <div class="classroom-member-name">
+                                                    {{ ban.student.username }}
+                                                </div>
+
+                                                <div class="classroom-member-date">
+                                                    Banned {{ ban.banned_at|date:"M d, Y" }}
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- UNBAN -->
+
+                                        <form
+                                            method="post"
+                                            action="{% url 'unban_member' classroom.id ban.student.id %}"
+                                            onsubmit="return confirm('Unban this student?');"
+                                        >
+
+                                            {% csrf_token %}
+
+                                            <button
+                                                type="submit"
+                                                class="member-action-btn member-unban-btn"
+                                                title="Unban"
+                                            >
+                                                <i class="fa fa-unlock"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                {% empty %}
+
+                                    <div class="classroom-members-empty">
+
+                                        <i class="fa fa-shield"></i>
+
+                                        <p>
+                                            No banned students.
+                                        </p>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            {% if banned_members|length > 3 %}
+
+                                <div class="classroom-members-footer">
+
+                                    Showing
+                                    <strong>3</strong>
+                                    of
+                                    <strong>{{ banned_members|length }}</strong>
+                                    banned
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

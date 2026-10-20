@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+hide stereotype
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 14
+skinparam roundCorner 10
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+skinparam nodesep 40
+skinparam ranksep 45
+skinparam rectangle {
+  BackgroundColor #EAF1FB
+  BorderColor #3B6FB6
+}
+skinparam rectangle<<out>> {
+  BackgroundColor #E6F4EA
+  BorderColor #2E7D32
+}
+
+rectangle "1. Student\nnộp mã nguồn" as A
+rectangle "2. Biên dịch\nmột lần\n(g++ / py_compile)" as B
+rectangle "3. Chạy từng\nTest Case\n(giới hạn thời gian,\nbộ nhớ)" as C
+rectangle "4. So sánh output\nvới Expected\nOutput" as D
+rectangle "5. Tổng hợp\ntrạng thái và điểm\nlưu kết quả" as E <<out>>
+
+A --> B
+B --> C : biên dịch\nthành công
+C --> D : chạy xong
+D --> E : accepted /\nwrong_answer
+B -[#C62828]-> E : compile_error
+C -[#C62828]-> E : time_limit /\nruntime_error
+@enduml

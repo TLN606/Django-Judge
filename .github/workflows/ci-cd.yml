@@ -1,0 +1,87 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: minijudge
+          POSTGRES_USER: minijudge
+          POSTGRES_PASSWORD: minijudge
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U minijudge"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      SECRET_KEY: ci-only-secret
+      DEBUG: "1"
+      DATABASE_URL: postgres://minijudge:minijudge@localhost:5432/minijudge
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint (flake8 - lỗi nghiêm trọng)
+        run: flake8 --select=E9,F --exclude=.venv,migrations .
+
+      - name: Django system check
+        run: python manage.py check
+
+      - name: Unit tests + coverage (>= 80%)
+        run: |
+          coverage run manage.py test
+          coverage report --fail-under=80
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and smoke test with docker compose
+        run: |
+          docker compose up -d --build
+          for i in $(seq 1 30); do
+            if curl -fs http://localhost:8000/accounts/login/ > /dev/null; then
+              echo "App is up"; exit 0
+            fi
+            sleep 3
+          done
+          docker compose logs web
+          exit 1
+
+      - name: Shut down
+        if: always()
+        run: docker compose down -v
+
+  deploy:
+    needs: docker
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK chưa được cấu hình - bỏ qua bước deploy."
+            exit 0
+          fi
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK"

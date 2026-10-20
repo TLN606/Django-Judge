@@ -1,0 +1,224 @@
+/* =========================================================
+   MiniJudge Custom Editor
+   ========================================================= */
+
+.submission-code-editor {
+    display: flex;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    background: #1d1c29;
+    border-radius: 0 0 14px 14px;
+}
+
+
+/* =========================================================
+   LINE NUMBERS
+   ========================================================= */
+
+.submission-line-numbers {
+    flex: 0 0 52px;
+    width: 52px;
+
+    padding-top: 18px;
+
+    background: #191824;
+    color: #666579;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 20px;
+
+    text-align: right;
+
+    border-right: 1px solid rgba(255,255,255,.05);
+
+    user-select: none;
+
+    overflow: hidden;
+}
+
+.submission-line-numbers span {
+    display: block;
+    height: 20px;
+    padding-right: 14px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.submission-editor-content {
+    position: relative;
+
+    flex: 1;
+
+    width: calc(100% - 52px);
+    height: 450px;
+
+    overflow: hidden;
+
+    background: #1d1c29;
+}
+
+
+/* =========================================================
+   HIGHLIGHT LAYER
+   ========================================================= */
+
+.submission-syntax-highlight {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    background: #1d1c29;
+
+    color: #f8f8f2;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+
+    white-space: pre;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    tab-size: 4;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   REAL TEXTAREA
+   ========================================================= */
+
+.submission-editor-content textarea {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    background: transparent;
+
+    color: transparent;
+
+    -webkit-text-fill-color: transparent;
+
+    caret-color: #ffffff;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+
+    white-space: pre;
+
+    tab-size: 4;
+
+    border: 0;
+    outline: 0;
+    resize: none;
+
+    overflow: auto;
+
+    z-index: 2;
+}
+
+.submission-editor-content textarea:focus {
+    outline: none;
+}
+
+.submission-editor-content textarea::selection {
+    background: rgba(139, 92, 246, .35);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.submission-editor-content textarea::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.submission-editor-content textarea::-webkit-scrollbar-track {
+    background: #191824;
+}
+
+.submission-editor-content textarea::-webkit-scrollbar-thumb {
+    background: #44415a;
+    border-radius: 8px;
+}
+
+.submission-editor-content textarea::-webkit-scrollbar-thumb:hover {
+    background: #5b5675;
+}
+
+
+/* =========================================================
+   SYNTAX
+   ========================================================= */
+
+.mj-code-keyword {
+    color: #ff79c6;
+}
+
+.mj-code-type {
+    color: #8be9fd;
+}
+
+.mj-code-number {
+    color: #bd93f9;
+}
+
+.mj-code-string {
+    color: #f1fa8c;
+}
+
+.mj-code-comment {
+    color: #6272a4;
+    font-style: italic;
+}
+
+.mj-code-function {
+    color: #50fa7b;
+}
+
+.mj-code-operator {
+    color: #ff79c6;
+}
+
+.mj-code-preprocessor {
+    color: #ff79c6;
+}
+
+.mj-code-builtin {
+    color: #8be9fd;
+}
+
+.mj-code-boolean {
+    color: #bd93f9;
+}

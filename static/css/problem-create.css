@@ -1,0 +1,2546 @@
+/* =========================================================
+   MINI JUDGE - CREATE PROBLEM
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.problem-page {
+
+    min-height: 100vh;
+
+    background:
+        #f3f2f7;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.problem-hero {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 285px;
+
+    background:
+        linear-gradient(
+            115deg,
+            #292642 0%,
+            #34304f 46%,
+            #403851 100%
+        );
+
+    color: #ffffff;
+
+}
+
+
+.problem-hero-grid {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .035;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        42px 42px;
+
+    pointer-events: none;
+
+}
+
+
+.problem-hero-glow {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+}
+
+
+.hero-glow-left {
+
+    width: 360px;
+    height: 360px;
+
+    left: -160px;
+    bottom: -240px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,102,0,.30),
+            rgba(255,102,0,0) 68%
+        );
+
+}
+
+
+.hero-glow-right {
+
+    width: 440px;
+    height: 440px;
+
+    right: -150px;
+    top: -280px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,126,83,.22),
+            rgba(255,126,83,0) 68%
+        );
+
+}
+
+
+/* =========================================================
+   HERO CONTAINER
+========================================================= */
+
+.problem-hero-container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        1060px,
+        calc(100% - 40px)
+    );
+
+    min-height: 285px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.problem-hero-content {
+
+    max-width: 650px;
+
+}
+
+
+.problem-hero-kicker {
+
+    margin-bottom: 10px;
+
+    color: #ff761f;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+}
+
+
+.problem-hero h1 {
+
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 42px;
+
+    font-weight: 700;
+
+    letter-spacing: -.8px;
+
+}
+
+
+.problem-hero p {
+
+    max-width: 610px;
+
+    margin: 0;
+
+    color: #c8c5d5;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+
+}
+
+
+.problem-hero-tags {
+
+    display: flex;
+
+    gap: 9px;
+
+    margin-top: 22px;
+
+}
+
+
+.hero-tag {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        8px
+        12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
+    border-radius: 20px;
+
+    color: #ddd9e8;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+}
+
+
+.hero-tag i {
+
+    color: #ff761f;
+
+}
+
+
+/* =========================================================
+   HERO ART
+========================================================= */
+
+.problem-hero-visual {
+
+    position: relative;
+
+    width: 240px;
+    height: 220px;
+
+    flex-shrink: 0;
+
+}
+
+
+.hero-code-card {
+
+    position: absolute;
+
+    z-index: 3;
+
+    top: 50%;
+    left: 50%;
+
+    width: 105px;
+    height: 105px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-5deg);
+
+    background:
+        linear-gradient(
+            145deg,
+            #5a5674,
+            #37334c
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 25px 45px
+        rgba(0,0,0,.28);
+
+}
+
+
+.code-bracket,
+.code-slash {
+
+    color: #ff761f;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size: 31px;
+
+    font-weight: 800;
+
+}
+
+
+.code-slash {
+
+    transform:
+        rotate(-15deg);
+
+}
+
+
+.hero-ring {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    border:
+        1px dashed
+        rgba(255,132,85,.35);
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+}
+
+
+.ring-1 {
+
+    width: 145px;
+    height: 145px;
+
+}
+
+
+.ring-2 {
+
+    width: 205px;
+    height: 205px;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+}
+
+
+.hero-dot {
+
+    position: absolute;
+
+    width: 11px;
+    height: 11px;
+
+    background: #ff761f;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 20px
+        rgba(255,118,31,.55);
+
+}
+
+
+.dot-1 {
+
+    top: 23px;
+    right: 28px;
+
+}
+
+
+.dot-2 {
+
+    right: 13px;
+    bottom: 37px;
+
+    width: 8px;
+    height: 8px;
+
+    background:
+        #8580a0;
+
+}
+
+
+.dot-3 {
+
+    left: 10px;
+    bottom: 60px;
+
+    width: 6px;
+    height: 6px;
+
+    background:
+        #ff9670;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.problem-content {
+
+    position: relative;
+
+    padding:
+        28px
+        0
+        65px;
+
+    background:
+
+        radial-gradient(
+            circle at 4% 10%,
+            rgba(255,102,0,.055),
+            transparent 24%
+        ),
+
+        radial-gradient(
+            circle at 96% 28%,
+            rgba(68,66,90,.055),
+            transparent 25%
+        ),
+
+        #f3f2f7;
+
+}
+
+
+/* =========================================================
+   CONTENT CONTAINER
+========================================================= */
+
+.problem-content-container {
+
+    width: min(
+        1060px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.problem-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+
+}
+
+
+.problem-back-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #858297;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: .2s ease;
+
+}
+
+
+.problem-back-link:hover {
+
+    color: #ff6600;
+
+    text-decoration: none;
+
+    transform:
+        translateX(-2px);
+
+}
+
+
+.problem-draft-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        7px
+        11px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        #dedae4;
+
+    border-radius: 20px;
+
+    color: #777489;
+
+    font-size: 7px;
+
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    box-shadow:
+        0 3px 9px
+        rgba(68,66,90,.05);
+
+}
+
+
+.problem-draft-badge span {
+
+    width: 6px;
+    height: 6px;
+
+    background:
+        #ff6600;
+
+    border-radius: 50%;
+
+}
+
+
+/* =========================================================
+   MAIN EDITOR
+========================================================= */
+
+.problem-editor {
+
+    padding:
+        10px;
+
+    background:
+        rgba(255,255,255,.82);
+
+    border:
+        1px solid
+        #dad6e1;
+
+    border-radius:
+        19px;
+
+    box-shadow:
+        0 18px 45px
+        rgba(68,66,90,.11);
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.editor-section {
+
+    padding:
+        26px;
+
+    margin-bottom:
+        10px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        #e1dee7;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(68,66,90,.045);
+
+}
+
+
+.editor-section:last-of-type {
+
+    margin-bottom: 0;
+
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+
+}
+
+
+.section-header-main {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+
+.section-icon {
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        #fff1e8;
+
+    border:
+        1px solid
+        #ffd9c1;
+
+    border-radius:
+        10px;
+
+    color:
+        #ff6600;
+
+    font-size:
+        11px;
+
+}
+
+
+.section-kicker {
+
+    margin-bottom:
+        3px;
+
+    color:
+        #ff6600;
+
+    font-size:
+        7px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1.5px;
+
+}
+
+
+.section-header h2 {
+
+    margin:
+        0 0 3px;
+
+    color:
+        #45435d;
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+}
+
+
+.section-header p {
+
+    margin: 0;
+
+    color:
+        #a5a2b1;
+
+    font-size:
+        8px;
+
+}
+
+
+/* =========================================================
+   FIELDS
+========================================================= */
+
+.field-block {
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.field-block:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.field-block > label,
+.field-label-row label {
+
+    display: block;
+
+    margin:
+        0 0 7px;
+
+    color:
+        #5a576e;
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+}
+
+
+.field-label-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.field-label-row span {
+
+    color:
+        #aaa7b4;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        6px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        .8px;
+
+}
+
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.field-block input,
+.field-block textarea,
+.field-block select {
+
+    width:
+        100%;
+
+    padding:
+        11px 12px;
+
+    background:
+        #f8f7fa;
+
+    border:
+        1px solid
+        #ddd9e4;
+
+    border-radius:
+        8px;
+
+    color:
+        #4b4860;
+
+    font-family:
+        inherit;
+
+    font-size:
+        9px;
+
+    outline:
+        none;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.field-block input {
+
+    height:
+        39px;
+
+}
+
+
+.field-block textarea {
+
+    min-height:
+        105px;
+
+    resize:
+        vertical;
+
+    line-height:
+        1.7;
+
+}
+
+
+.field-block input:hover,
+.field-block textarea:hover,
+.field-block select:hover {
+
+    border-color:
+        #cbc6d3;
+
+}
+
+
+.field-block input:focus,
+.field-block textarea:focus,
+.field-block select:focus {
+
+    background:
+        #ffffff;
+
+    border-color:
+        #ff6600;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,102,0,.07);
+
+}
+
+
+.field-block input::placeholder,
+.field-block textarea::placeholder {
+
+    color:
+        #b4b1bd;
+
+}
+
+
+/* =========================================================
+   STATEMENT GRID
+========================================================= */
+
+.statement-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        18px;
+
+}
+
+
+/* =========================================================
+   JUDGE SETTINGS
+========================================================= */
+
+.judge-settings-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        11px;
+
+}
+
+
+.judge-card {
+
+    min-height:
+        98px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+
+    padding:
+        14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f9f8fb
+        );
+
+    border:
+        1px solid
+        #dad6e2;
+
+    border-radius:
+        11px;
+
+    box-shadow:
+        0 5px 14px
+        rgba(68,66,90,.055);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.judge-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 9px 20px
+        rgba(68,66,90,.075);
+
+}
+
+
+.judge-card-icon {
+
+    width:
+        30px;
+
+    height:
+        30px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    background:
+        #fff1e8;
+
+    border-radius:
+        8px;
+
+    color:
+        #ff6600;
+
+    font-size:
+        9px;
+
+}
+
+
+.judge-card-content {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+}
+
+
+.judge-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #9b98a7;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .8px;
+
+}
+
+
+.judge-card-content select,
+.judge-card-content input {
+
+    width:
+        100%;
+
+    height:
+        29px;
+
+    padding:
+        0 8px;
+
+    background:
+        #f7f6f9;
+
+    border:
+        1px solid
+        #dedbe5;
+
+    border-radius:
+        6px;
+
+    color:
+        #555268;
+
+    font-size:
+        8px;
+
+    outline:
+        none;
+
+}
+
+
+.judge-value-input {
+
+    position:
+        relative;
+
+}
+
+
+.judge-value-input input {
+
+    padding-right:
+        32px;
+
+}
+
+
+.judge-value-input span {
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    right:
+        8px;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        #aaa7b4;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+}
+
+
+.judge-language-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #45425e,
+            #333047
+        );
+
+    border-color:
+        #45425e;
+
+}
+
+
+.judge-language-card .judge-label {
+
+    color:
+        #aaa7bd;
+
+}
+
+
+.judge-language-card strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        #ffffff;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        13px;
+
+}
+
+
+.judge-language-card small {
+
+    color:
+        #aaa7bd;
+
+    font-size:
+        6px;
+
+}
+
+
+/* =========================================================
+   TEST CASE SECTION
+========================================================= */
+
+.test-case-section {
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaf6,
+            #ffffff 50%,
+            #fbf9fc
+        );
+
+}
+
+
+.test-section-header {
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.test-case-count {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-width:
+        78px;
+
+    padding:
+        7px 11px;
+
+    background:
+        #fff2e9;
+
+    border:
+        1px solid
+        #ffd7bd;
+
+    border-radius:
+        20px;
+
+    color:
+        #ff6600;
+
+    font-size:
+        7px;
+
+    font-weight:
+        800;
+
+}
+
+
+/* =========================================================
+   TEST WORKSPACE
+========================================================= */
+
+.test-workspace {
+
+    padding:
+        12px;
+
+    background:
+        #efedf3;
+
+    border:
+        1px solid
+        #d9d5df;
+
+    border-radius:
+        12px;
+
+}
+
+
+.workspace-header {
+
+    height:
+        32px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 7px 9px;
+
+}
+
+
+.workspace-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+}
+
+
+.terminal-dot {
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+}
+
+
+.terminal-dot.red {
+
+    background:
+        #e56a6a;
+
+}
+
+
+.terminal-dot.yellow {
+
+    background:
+        #e4a84e;
+
+}
+
+
+.terminal-dot.green {
+
+    background:
+        #62b77d;
+
+}
+
+
+.workspace-name {
+
+    margin-left:
+        6px;
+
+    color:
+        #676377;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        7px;
+
+    font-weight:
+        700;
+
+}
+
+
+.workspace-meta {
+
+    color:
+        #aaa7b5;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        6px;
+
+    letter-spacing:
+        .8px;
+
+}
+
+
+/* =========================================================
+   TEST CASE CONTAINER
+========================================================= */
+
+#test-cases-container {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        11px;
+
+}
+
+
+/* =========================================================
+   TEST CASE CARD
+========================================================= */
+
+.test-case-card {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        #d7d2de;
+
+    border-radius:
+        10px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(68,66,90,.07);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.test-case-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    left:
+        0;
+
+    width:
+        3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff6600,
+            #ff9d67
+        );
+
+}
+
+
+.test-case-card:hover {
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 19px
+        rgba(68,66,90,.09);
+
+}
+
+
+/* =========================================================
+   TEST CASE HEADER
+========================================================= */
+
+.test-case-header {
+
+    min-height:
+        55px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 13px 0 17px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff6f0,
+            #ffffff
+        );
+
+    border-bottom:
+        1px solid
+        #ece8ee;
+
+}
+
+
+.test-case-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+}
+
+
+.test-case-number {
+
+    width:
+        28px;
+
+    height:
+        28px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        #ff6600;
+
+    border-radius:
+        8px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    box-shadow:
+        0 3px 8px
+        rgba(255,102,0,.19);
+
+}
+
+
+.test-case-title-text {
+
+    display:
+        block;
+
+    color:
+        #4d4a61;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+}
+
+
+.test-case-title small {
+
+    display:
+        block;
+
+    margin-top:
+        2px;
+
+    color:
+        #aaa7b4;
+
+    font-size:
+        6px;
+
+}
+
+
+/* =========================================================
+   TEST ACTIONS
+========================================================= */
+
+.test-case-header-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+}
+
+
+.test-case-sample {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    min-height:
+        26px;
+
+    padding:
+        0 8px;
+
+    margin:
+        0;
+
+    background:
+        #f6f5f8;
+
+    border:
+        1px solid
+        #e5e2ea;
+
+    border-radius:
+        20px;
+
+    color:
+        #7f7c8f;
+
+    font-size:
+        7px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.test-case-sample input {
+
+    width:
+        12px;
+
+    height:
+        12px;
+
+    margin:
+        0;
+
+    accent-color:
+        #ff6600;
+
+}
+
+
+.test-case-remove-btn {
+
+    width:
+        27px;
+
+    height:
+        27px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        0;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        #eadede;
+
+    border-radius:
+        7px;
+
+    color:
+        #c87979;
+
+    font-size:
+        7px;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.test-case-remove-btn:hover {
+
+    background:
+        #dc3545;
+
+    border-color:
+        #dc3545;
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   TEST BODY
+========================================================= */
+
+.test-case-body {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        11px;
+
+    padding:
+        13px;
+
+}
+
+
+/* =========================================================
+   TEST EDITOR
+========================================================= */
+
+.test-editor {
+
+    overflow:
+        hidden;
+
+    background:
+        #20202a;
+
+    border:
+        1px solid
+        #d8d4de;
+
+    border-radius:
+        8px;
+
+}
+
+
+.test-editor-header {
+
+    height:
+        30px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 9px;
+
+    background:
+        #f0eef3;
+
+    border-bottom:
+        1px solid
+        #dad6df;
+
+    color:
+        #676377;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .6px;
+
+}
+
+
+.test-editor-header > div {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+}
+
+
+.test-editor-header i {
+
+    color:
+        #ff6600;
+
+}
+
+
+.test-editor-header span {
+
+    color:
+        #aaa7b4;
+
+    font-size:
+        6px;
+
+    letter-spacing:
+        .8px;
+
+}
+
+
+.test-editor textarea {
+
+    width:
+        100%;
+
+    min-height:
+        130px;
+
+    display:
+        block;
+
+    padding:
+        12px;
+
+    background:
+        #20202a;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    color:
+        #efedf5;
+
+    font-family:
+        "Consolas",
+        "Cascadia Code",
+        "Courier New",
+        monospace;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.65;
+
+    resize:
+        vertical;
+
+}
+
+
+.test-editor textarea::placeholder {
+
+    color:
+        #74727e;
+
+}
+
+
+.test-editor textarea:focus {
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255,102,0,.55);
+
+}
+
+
+/* =========================================================
+   DELETE FIELD
+========================================================= */
+
+.test-case-delete-field {
+
+    display:
+        none;
+
+}
+
+
+/* =========================================================
+   ADD TEST CASE
+========================================================= */
+
+.add-test-case-btn {
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    margin-top:
+        11px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px dashed
+        #c9c4d0;
+
+    border-radius:
+        9px;
+
+    color:
+        #727083;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.add-test-icon {
+
+    width:
+        22px;
+
+    height:
+        22px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        #fff0e5;
+
+    border-radius:
+        6px;
+
+    color:
+        #ff6600;
+
+    font-size:
+        8px;
+
+}
+
+
+.add-test-text {
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+}
+
+
+.add-test-subtext {
+
+    color:
+        #aaa7b4;
+
+    font-size:
+        6px;
+
+}
+
+
+.add-test-case-btn:hover {
+
+    background:
+        #fff8f3;
+
+    border-color:
+        #ff6600;
+
+    color:
+        #ff6600;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(255,102,0,.07);
+
+}
+
+
+.add-test-case-btn:hover
+.add-test-icon {
+
+    background:
+        #ff6600;
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   ERRORS
+========================================================= */
+
+.problem-form-error {
+
+    margin-top:
+        6px;
+
+    color:
+        #dc3545;
+
+    font-size:
+        8px;
+
+}
+
+
+.problem-form-error ul {
+
+    margin:
+        0;
+
+    padding-left:
+        15px;
+
+}
+
+
+.problem-form-error-main {
+
+    padding:
+        12px 14px;
+
+    margin:
+        0 0 10px;
+
+    background:
+        #fff3f3;
+
+    border:
+        1px solid
+        #ffd4d4;
+
+    border-radius:
+        8px;
+
+    color:
+        #dc3545;
+
+    font-size:
+        8px;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.problem-create-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding:
+        18px 10px 8px;
+
+}
+
+
+.actions-info {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    color:
+        #9a97a7;
+
+    font-size:
+        8px;
+
+}
+
+
+.actions-info i {
+
+    color:
+        #ff6600;
+
+}
+
+
+.actions-info strong {
+
+    color:
+        #6e6b7e;
+
+}
+
+
+.actions-buttons {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+}
+
+
+.problem-cancel-btn,
+.problem-create-btn {
+
+    min-height:
+        39px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    padding:
+        0 16px;
+
+    border-radius:
+        8px;
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.problem-cancel-btn {
+
+    background:
+        #f1eff4;
+
+    border:
+        1px solid
+        #ddd9e3;
+
+    color:
+        #777489;
+
+}
+
+
+.problem-cancel-btn:hover {
+
+    background:
+        #e8e5ec;
+
+    color:
+        #555268;
+
+    text-decoration:
+        none;
+
+}
+
+
+.problem-create-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff6600,
+            #f47425
+        );
+
+    border:
+        1px solid
+        #ff6600;
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 5px 12px
+        rgba(255,102,0,.19);
+
+}
+
+
+.problem-create-btn:hover {
+
+    background:
+        #e85d00;
+
+    border-color:
+        #e85d00;
+
+    color:
+        #ffffff;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(255,102,0,.25);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .problem-hero-visual {
+
+        width:
+            180px;
+
+    }
+
+
+    .problem-hero h1 {
+
+        font-size:
+            34px;
+
+    }
+
+
+    .judge-settings-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .problem-hero {
+
+        min-height:
+            235px;
+
+    }
+
+
+    .problem-hero-container {
+
+        width:
+            calc(100% - 30px);
+
+        min-height:
+            235px;
+
+    }
+
+
+    .problem-hero h1 {
+
+        font-size:
+            28px;
+
+    }
+
+
+    .problem-hero p {
+
+        font-size:
+            10px;
+
+    }
+
+
+    .problem-hero-visual {
+
+        display:
+            none;
+
+    }
+
+
+    .problem-content {
+
+        padding:
+            20px
+            0
+            40px;
+
+    }
+
+
+    .problem-content-container {
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .problem-editor {
+
+        padding:
+            7px;
+
+    }
+
+
+    .editor-section {
+
+        padding:
+            20px;
+
+    }
+
+
+    .statement-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            18px;
+
+    }
+
+
+    .judge-settings-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .test-case-body {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .problem-create-actions {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .actions-buttons {
+
+        width:
+            100%;
+
+    }
+
+
+    .problem-cancel-btn,
+    .problem-create-btn {
+
+        flex:
+            1;
+
+    }
+
+
+    .actions-info {
+
+        justify-content:
+            center;
+
+    }
+
+
+    .add-test-subtext {
+
+        display:
+            none;
+
+    }
+
+}
+
+.problem-import-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid #d6d3e8;
+
+    background: #ffffff;
+
+    color: #6d5dfc;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.problem-import-btn:hover {
+    background: #f4f1ff;
+    border-color: #6d5dfc;
+    color: #5a4be7;
+    transform: translateY(-1px);
+}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="join-classroom-page">
+
+    <div class="join-classroom-bg">
+        <div class="join-glow join-glow-1"></div>
+        <div class="join-glow join-glow-2"></div>
+        <div class="join-grid"></div>
+    </div>
+
+
+    <div class="container">
+
+        <div class="join-classroom-wrapper">
+
+            <div class="join-classroom-intro">
+
+                <div class="join-classroom-icon">
+                    <i class="fa fa-users"></i>
+                </div>
+
+                <span class="join-classroom-eyebrow">
+                    CLASSROOM
+                </span>
+
+                <h1>
+                    Join a
+                    <span>Classroom.</span>
+                </h1>
+
+                <p>
+                    Enter the classroom code provided by your teacher
+                    to join the class and access its programming problems.
+                </p>
+
+                <div class="join-classroom-hint">
+
+                    <i class="fa fa-info-circle"></i>
+
+                    <span>
+                        Ask your teacher for the classroom code
+                        if you don't have one.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="join-classroom-card">
+
+                <div class="join-card-header">
+
+                    <div class="join-card-icon">
+                        <i class="fa fa-key"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            CLASSROOM ACCESS
+                        </span>
+
+                        <h2>
+                            Enter Class Code
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form
+                    method="post"
+                    class="join-classroom-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="join-code-field">
+
+                        <label for="{{ form.code.id_for_label }}">
+                            Classroom Code
+                        </label>
+
+                        {{ form.code }}
+
+                        {% if form.code.errors %}
+
+                            <div class="join-form-error">
+
+                                <i class="fa fa-exclamation-circle"></i>
+
+                                {{ form.code.errors.0 }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="join-classroom-btn"
+                    >
+
+                        <span>
+                            Join Classroom
+                        </span>
+
+                        <i class="fa fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <a
+                    href="{% url 'classroom_list' %}"
+                    class="join-back-btn"
+                >
+
+                    <i class="fa fa-arrow-left"></i>
+
+                    Back to Classrooms
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

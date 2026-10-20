@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="testcase-form-page">
+
+    <!-- HERO -->
+
+    <section class="testcase-form-hero">
+
+        <div class="testcase-form-hero-bg"></div>
+
+        <div class="container">
+
+            <div class="testcase-form-breadcrumb">
+
+                <a href="{% url 'classroom_detail' problem.classroom.id %}">
+                    {{ problem.classroom.name }}
+                </a>
+
+                <span>/</span>
+
+                <a href="{% url 'problem_detail' problem.id %}">
+                    {{ problem.title }}
+                </a>
+
+                <span>/</span>
+
+                <a href="{% url 'test_case_list' problem.id %}">
+                    Test Cases
+                </a>
+
+                <span>/</span>
+
+                {% if editing %}
+                    <span>Edit</span>
+                {% else %}
+                    <span>Add</span>
+                {% endif %}
+
+            </div>
+
+
+            <div class="testcase-form-heading">
+
+                <div>
+
+                    <div class="testcase-form-eyebrow">
+                        <i class="fa fa-flask"></i>
+                        Test Case Management
+                    </div>
+
+                    {% if editing %}
+                        <h1>Edit Test Case</h1>
+                    {% else %}
+                        <h1>Add Test Case</h1>
+                    {% endif %}
+
+                    <p>
+                        {% if editing %}
+                            Update this test case for
+                        {% else %}
+                            Create a new test case for
+                        {% endif %}
+
+                        <strong>{{ problem.title }}</strong>.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FORM -->
+
+    <section class="testcase-form-content">
+
+        <div class="container">
+
+            <form method="post" class="testcase-form-card">
+
+                {% csrf_token %}
+
+
+                <!-- CARD HEADER -->
+
+                <div class="testcase-form-card-header">
+
+                    <div class="testcase-form-card-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>Test Case Data</h2>
+
+                        {% if editing %}
+                            <span class="testcase-editing-label">
+                                Editing Test Case #{{ test_case.id }}
+                            </span>
+                        {% endif %}
+
+                        <p>
+                            Define the input and expected output
+                            used by the Online Judge.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FORM BODY -->
+
+                <div class="testcase-form-body">
+
+
+                    <!-- INPUT -->
+
+                    <div class="testcase-field">
+
+                        <label for="{{ form.input_data.id_for_label }}">
+
+                            <span>
+                                Input
+                            </span>
+
+                            <small>
+                                Test data passed to the program
+                            </small>
+
+                        </label>
+
+                        {{ form.input_data }}
+
+                        {% if form.input_data.errors %}
+
+                            <div class="testcase-form-error">
+                                {{ form.input_data.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- OUTPUT -->
+
+                    <div class="testcase-field">
+
+                        <label for="{{ form.expected_output.id_for_label }}">
+
+                            <span>
+                                Expected Output
+                            </span>
+
+                            <small>
+                                Correct output produced by the program
+                            </small>
+
+                        </label>
+
+                        {{ form.expected_output }}
+
+                        {% if form.expected_output.errors %}
+
+                            <div class="testcase-form-error">
+                                {{ form.expected_output.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- SAMPLE CHECKBOX -->
+
+                    <div class="testcase-sample-option">
+
+                        <div class="testcase-checkbox">
+
+                            {{ form.is_sample }}
+
+                        </div>
+
+                        <div>
+
+                            <label for="{{ form.is_sample.id_for_label }}">
+                                Make this a sample test case
+                            </label>
+
+                            <p>
+                                Sample test cases are visible to
+                                students on the problem page.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="testcase-form-footer">
+
+                    <a
+                        href="{% url 'test_case_list' problem.id %}"
+                        class="testcase-cancel-btn"
+                    >
+                        <i class="fa fa-arrow-left"></i>
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="testcase-create-btn"
+                    >
+
+                        <i class="fa fa-check"></i>
+
+                        {% if editing %}
+                            Save Changes
+                        {% else %}
+                            Create Test Case
+                        {% endif %}
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+
+            <!-- INFO -->
+
+            <div class="testcase-form-info">
+
+                <div class="testcase-form-info-icon">
+                    <i class="fa fa-info-circle"></i>
+                </div>
+
+                <div>
+
+                    <strong>Test Case Visibility</strong>
+
+                    <p>
+                        Sample test cases help students understand
+                        the problem. Hidden test cases are kept private
+                        and are used only during submission evaluation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

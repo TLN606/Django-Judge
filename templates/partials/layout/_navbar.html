@@ -1,0 +1,161 @@
+{% load static %}
+
+<nav class="mj-navbar">
+
+    <div class="container">
+
+        <div class="mj-navbar-inner">
+
+            <!-- Logo -->
+
+            <a
+                href="/"
+                class="mj-brand"
+            >
+
+                <div class="mj-brand-icon">
+                    <i class="fa fa-code"></i>
+                </div>
+
+                <div class="mj-brand-text">
+
+                    <strong>MiniJudge</strong>
+
+                    <span>CLASSROOM</span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Navigation -->
+
+            <div class="mj-nav-links">
+
+                <a
+                    href="/"
+                    class="mj-nav-link active"
+                >
+                    <i class="fa fa-home"></i>
+                    Home
+                </a>
+
+
+                <a
+                    href="{% url 'classroom_list' %}"
+                    class="mj-nav-link"
+                >
+                    <i class="fa fa-users"></i>
+                    Classrooms
+                </a>
+
+
+                <a
+                    href="{% url 'problem_list' %}"
+                    class="mj-nav-link"
+                >
+                    <i class="fa fa-code"></i>
+                    Problems
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}#about"
+                    class="mj-nav-link"
+                >
+                    <i class="fa fa-info-circle"></i>
+                    About
+                </a>
+
+            </div>
+
+
+            <!-- Right side -->
+
+            <div class="mj-navbar-right">
+
+                {% if user.is_authenticated %}
+
+                    <div class="mj-user-menu">
+
+                        <div class="mj-user-info">
+
+                            <div class="mj-user-avatar">
+                                <i class="fa fa-user"></i>
+                            </div>
+
+                            <div class="mj-user-text">
+
+                                <strong>
+                                    {{ user.username }}
+                                </strong>
+
+                                <span>
+                                    {{ user.get_role_display }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <form
+                            method="post"
+                            action="{% url 'logout' %}"
+                            class="mj-logout-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="mj-logout-btn"
+                            >
+
+                                <i class="fa fa-sign-out"></i>
+
+                                <span>
+                                    Logout
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="mj-login-btn"
+                    >
+
+                        <i class="fa fa-sign-in"></i>
+
+                        <span>
+                            Login
+                        </span>
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Mobile button -->
+
+            <button
+                class="mj-mobile-toggle"
+                type="button"
+                onclick="document.querySelector('.mj-nav-links').classList.toggle('show')"
+            >
+                <i class="fa fa-bars"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</nav>

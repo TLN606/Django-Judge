@@ -1,0 +1,1256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Import Problem Package - MiniJudge
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.import-page {
+
+    min-height: 100vh;
+
+    padding: 45px 0 70px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,102,0,.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(68,66,90,.07),
+            transparent 28%
+        ),
+        #f3f2f7;
+}
+
+
+.import-container {
+
+    width: min(
+        900px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+.import-back {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 16px;
+
+    color: #8c899a;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+.import-back:hover {
+
+    color: #FF6600;
+
+    text-decoration: none;
+
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.import-messages {
+
+    margin-bottom: 15px;
+
+}
+
+.import-message {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px 15px;
+
+    border-radius: 9px;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+}
+
+.import-message.success {
+
+    background: #eaf8ef;
+
+    border: 1px solid #b9dfc7;
+
+    color: #237a45;
+
+}
+
+.import-message.error {
+
+    background: #fff0f0;
+
+    border: 1px solid #e7b8b8;
+
+    color: #b42318;
+
+}
+
+.import-message.warning {
+
+    background: #fff8e7;
+
+    border: 1px solid #ead79f;
+
+    color: #8a6714;
+
+}
+
+.import-message.info {
+
+    background: #eef4ff;
+
+    border: 1px solid #c6d5f2;
+
+    color: #315a9b;
+
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.import-hero {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 35px;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #302c49,
+            #453b58
+        );
+
+    border-radius: 16px;
+
+    color: white;
+
+    box-shadow:
+        0 15px 35px
+        rgba(68,66,90,.14);
+
+}
+
+.import-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    top: -90px;
+
+    right: -50px;
+
+    border-radius: 50%;
+
+    background: rgba(255,102,0,.08);
+
+}
+
+.import-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+
+    height: 120px;
+
+    bottom: -70px;
+
+    left: 55%;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.05);
+
+}
+
+.import-kicker {
+
+    position: relative;
+
+    z-index: 1;
+
+    margin-bottom: 7px;
+
+    color: #ff792b;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.import-hero h1 {
+
+    position: relative;
+
+    z-index: 1;
+
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 27px;
+
+    font-weight: 700;
+
+}
+
+
+.import-hero p {
+
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 600px;
+
+    margin: 0;
+
+    color: #c8c4d5;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+}
+
+.import-hero strong {
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.import-card {
+
+    margin-top: 18px;
+
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid #ddd9e4;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 10px 28px
+        rgba(68,66,90,.07);
+
+}
+
+
+.import-section-title {
+
+    margin-bottom: 15px;
+
+}
+
+
+.import-section-title h3 {
+
+    margin: 0 0 4px;
+
+    color: #45425b;
+
+    font-size: 14px;
+
+}
+
+
+.import-section-title p {
+
+    margin: 0;
+
+    color: #aaa7b5;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   PACKAGE STRUCTURE
+   ========================================================= */
+
+.package-format {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.package-file {
+
+    padding: 15px;
+
+    background: #f7f6f9;
+
+    border: 1px solid #e0dce5;
+
+    border-radius: 10px;
+
+    transition: .2s ease;
+
+}
+
+
+.package-file:hover {
+
+    border-color: #d0c8dc;
+
+    transform: translateY(-1px);
+
+}
+
+
+.package-file i {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #FF6600;
+
+    font-size: 14px;
+
+}
+
+
+.package-file strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #555269;
+
+    font-family:
+        "Consolas",
+        monospace;
+
+    font-size: 9px;
+
+}
+
+
+.package-file span {
+
+    color: #aaa7b5;
+
+    font-size: 7px;
+
+}
+
+
+/* =========================================================
+   IMPORT METHODS
+   ========================================================= */
+
+.import-methods {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 14px;
+
+}
+
+
+.import-method {
+
+    position: relative;
+
+    padding: 20px;
+
+    background: #fbfafc;
+
+    border: 1px solid #ddd9e4;
+
+    border-radius: 11px;
+
+    transition: .2s ease;
+
+}
+
+
+.import-method:hover {
+
+    border-color: #cfc9da;
+
+}
+
+
+.import-method h4 {
+
+    margin: 0 0 4px;
+
+    color: #555269;
+
+    font-size: 11px;
+
+}
+
+
+.import-method h4 i {
+
+    margin-right: 5px;
+
+    color: #6b667e;
+
+}
+
+
+.import-method p {
+
+    margin: 0 0 15px;
+
+    color: #aaa7b5;
+
+    font-size: 7px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
+
+.file-input {
+
+    width: 100%;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border: 1px dashed #cbc6d3;
+
+    border-radius: 8px;
+
+    color: #777489;
+
+    font-size: 8px;
+
+    cursor: pointer;
+
+}
+
+
+.file-input:hover {
+
+    border-color: #FF6600;
+
+}
+
+
+.file-input::file-selector-button {
+
+    margin-right: 8px;
+
+    padding: 6px 10px;
+
+    background: #f1eff5;
+
+    border: 1px solid #d9d4e0;
+
+    border-radius: 6px;
+
+    color: #555269;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.file-input::file-selector-button:hover {
+
+    background: #ebe8f0;
+
+}
+
+
+/* =========================================================
+   FILE STATUS
+   ========================================================= */
+
+.file-status {
+
+    margin-top: 8px;
+
+    color: #aaa7b5;
+
+    font-size: 7px;
+
+    line-height: 1.5;
+
+}
+
+
+.file-status.ready {
+
+    color: #237a45;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.import-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eeeaf1;
+
+}
+
+
+.import-note {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #aaa7b5;
+
+    font-size: 7px;
+
+}
+
+
+.import-submit {
+
+    min-height: 39px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 17px;
+
+    background: #FF6600;
+
+    border: 1px solid #FF6600;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+
+}
+
+
+.import-submit:hover {
+
+    background: #e85d00;
+
+    border-color: #e85d00;
+
+    transform: translateY(-1px);
+
+}
+
+
+.import-submit:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .package-format,
+    .import-methods {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .import-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .import-submit {
+
+        width: 100%;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="import-page">
+
+    <div class="import-container">
+
+
+        <!-- =====================================================
+             BACK
+        ====================================================== -->
+
+        <a
+            href="{% url 'classroom_detail' classroom.id %}"
+            class="import-back"
+        >
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Classroom
+
+        </a>
+
+
+
+        <!-- =====================================================
+             MESSAGES
+        ====================================================== -->
+
+        {% if messages %}
+
+            <div class="import-messages">
+
+                {% for message in messages %}
+
+                    <div
+                        class="
+                            import-message
+                            {% if message.tags %}
+                                {{ message.tags }}
+                            {% else %}
+                                info
+                            {% endif %}
+                        "
+                    >
+
+                        {% if message.tags == 'success' %}
+
+                            <i class="fas fa-check-circle"></i>
+
+                        {% elif message.tags == 'error' %}
+
+                            <i class="fas fa-exclamation-circle"></i>
+
+                        {% elif message.tags == 'warning' %}
+
+                            <i class="fas fa-exclamation-triangle"></i>
+
+                        {% else %}
+
+                            <i class="fas fa-info-circle"></i>
+
+                        {% endif %}
+
+                        <span>
+                            {{ message }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <div class="import-hero">
+
+            <div class="import-kicker">
+                PROBLEM PACKAGE
+            </div>
+
+            <h1>
+                Import Problem
+            </h1>
+
+            <p>
+
+                Import a complete programming problem
+                with its test cases into
+                <strong>{{ classroom.name }}</strong>.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MAIN CARD
+        ====================================================== -->
+
+        <div class="import-card">
+
+
+            <!-- =================================================
+                 PACKAGE STRUCTURE
+            ================================================== -->
+
+            <div class="import-section-title">
+
+                <h3>
+                    Package Structure
+                </h3>
+
+                <p>
+                    Your package must contain these three files.
+                </p>
+
+            </div>
+
+
+
+            <div class="package-format">
+
+
+                <!-- problem.txt -->
+
+                <div class="package-file">
+
+                    <i class="fas fa-file-alt"></i>
+
+                    <strong>
+                        problem.txt
+                    </strong>
+
+                    <span>
+                        Problem statement & settings
+                    </span>
+
+                </div>
+
+
+
+                <!-- input.txt -->
+
+                <div class="package-file">
+
+                    <i class="fas fa-file-code"></i>
+
+                    <strong>
+                        input.txt
+                    </strong>
+
+                    <span>
+                        Test case inputs
+                    </span>
+
+                </div>
+
+
+
+                <!-- output.txt -->
+
+                <div class="package-file">
+
+                    <i class="fas fa-file-code"></i>
+
+                    <strong>
+                        output.txt
+                    </strong>
+
+                    <span>
+                        Expected outputs
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 IMPORT FORM
+            ================================================== -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+
+                <!-- =================================================
+                     IMPORT METHOD TITLE
+                ================================================== -->
+
+                <div class="import-section-title">
+
+                    <h3>
+                        Choose Import Method
+                    </h3>
+
+                    <p>
+                        Upload a ZIP package or select a folder.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     IMPORT METHODS
+                ================================================== -->
+
+                <div class="import-methods">
+
+
+                    <!-- =================================================
+                         ZIP
+                    ================================================== -->
+
+                    <div class="import-method">
+
+                        <h4>
+
+                            <i class="fas fa-file-archive"></i>
+
+                            ZIP Package
+
+                        </h4>
+
+                        <p>
+                            Upload a .zip containing the three required files.
+                        </p>
+
+
+                        <input
+                            type="file"
+                            name="package_zip"
+                            accept=".zip"
+                            class="file-input"
+                            id="package-zip-input"
+                        >
+
+
+                        <div
+                            id="zip-status"
+                            class="file-status"
+                        >
+                            No ZIP file selected.
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         FOLDER
+                    ================================================== -->
+
+                    <div class="import-method">
+
+                        <h4>
+
+                            <i class="fas fa-folder-open"></i>
+
+                            Package Folder
+
+                        </h4>
+
+                        <p>
+                            Select a folder containing the three required files.
+                        </p>
+
+
+                        <input
+                            type="file"
+                            name="package_folder"
+                            class="file-input"
+                            id="package-folder-input"
+                            webkitdirectory
+                            directory
+                            multiple
+                        >
+
+
+                        <div
+                            id="folder-status"
+                            class="file-status"
+                        >
+                            No folder selected.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ACTIONS
+                ================================================== -->
+
+                <div class="import-actions">
+
+
+                    <div class="import-note">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        <span>
+                            Imported problems are created as Draft.
+                        </span>
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="import-submit"
+                    >
+
+                        <i class="fas fa-file-import"></i>
+
+                        Import Problem
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+
+        const zipInput =
+            document.getElementById(
+                'package-zip-input'
+            );
+
+
+        const folderInput =
+            document.getElementById(
+                'package-folder-input'
+            );
+
+
+        const zipStatus =
+            document.getElementById(
+                'zip-status'
+            );
+
+
+        const folderStatus =
+            document.getElementById(
+                'folder-status'
+            );
+
+
+
+        /* =====================================================
+           ZIP SELECT
+        ====================================================== */
+
+        if (zipInput) {
+
+            zipInput.addEventListener(
+                'change',
+                function () {
+
+                    if (
+                        !this.files ||
+                        this.files.length === 0
+                    ) {
+
+                        zipStatus.textContent =
+                            'No ZIP file selected.';
+
+                        zipStatus.classList.remove(
+                            'ready'
+                        );
+
+                        return;
+
+                    }
+
+
+                    const file =
+                        this.files[0];
+
+
+                    zipStatus.textContent =
+                        'Selected: ' +
+                        file.name;
+
+
+                    zipStatus.classList.add(
+                        'ready'
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           FOLDER SELECT
+        ====================================================== */
+
+        if (folderInput) {
+
+            folderInput.addEventListener(
+                'change',
+                function () {
+
+                    if (
+                        !this.files ||
+                        this.files.length === 0
+                    ) {
+
+                        folderStatus.textContent =
+                            'No folder selected.';
+
+                        folderStatus.classList.remove(
+                            'ready'
+                        );
+
+                        return;
+
+                    }
+
+
+                    const files =
+                        Array.from(
+                            this.files
+                        );
+
+
+                    const fileNames =
+                        files.map(
+                            function (file) {
+
+                                return file.name
+                                    .toLowerCase();
+
+                            }
+                        );
+
+
+                    const hasProblem =
+                        fileNames.includes(
+                            'problem.txt'
+                        );
+
+
+                    const hasInput =
+                        fileNames.includes(
+                            'input.txt'
+                        );
+
+
+                    const hasOutput =
+                        fileNames.includes(
+                            'output.txt'
+                        );
+
+
+                    if (
+                        hasProblem &&
+                        hasInput &&
+                        hasOutput
+                    ) {
+
+                        folderStatus.textContent =
+                            'Ready: ' +
+                            files.length +
+                            ' file(s) selected. ' +
+                            'problem.txt, input.txt and output.txt found.';
+
+                        folderStatus.classList.add(
+                            'ready'
+                        );
+
+                    }
+
+                    else {
+
+                        const missing = [];
+
+                        if (!hasProblem) {
+                            missing.push(
+                                'problem.txt'
+                            );
+                        }
+
+                        if (!hasInput) {
+                            missing.push(
+                                'input.txt'
+                            );
+                        }
+
+                        if (!hasOutput) {
+                            missing.push(
+                                'output.txt'
+                            );
+                        }
+
+
+                        folderStatus.textContent =
+                            'Missing: ' +
+                            missing.join(', ');
+
+                        folderStatus.classList.remove(
+                            'ready'
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+    }
+);
+
+</script>
+
+{% endblock %}

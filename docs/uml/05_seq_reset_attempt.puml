@@ -1,0 +1,24 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+title Giáo viên reset lượt làm bài
+actor "Giáo viên" as T
+participant "reset_attempt\n(View)" as V
+database "CSDL" as DB
+actor "Sinh viên" as S
+T -> V : POST /submissions/problem/{id}/reset/{student_id}/
+V -> DB : Lấy Problem, kiểm tra giáo viên sở hữu lớp
+alt Không có quyền
+  V --> T : Chuyển về trang bài tập
+else Có quyền
+  V -> DB : Lấy ProblemAttempt(problem, student)
+  V -> DB : status = available, reset_count + 1,\nlast_reset_by, last_reset_at
+  V --> T : Chuyển về danh sách bài nộp
+  S -> V : Nộp bài mới (được phép)
+end
+@enduml

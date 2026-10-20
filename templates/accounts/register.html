@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="register-page">
+
+    <div class="register-background">
+
+        <div class="register-glow register-glow-1"></div>
+        <div class="register-glow register-glow-2"></div>
+
+        <div class="register-grid"></div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="register-wrapper">
+
+
+            <!-- Intro -->
+
+            <div class="register-intro">
+
+                <div class="register-logo">
+
+                    <div class="register-logo-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+                    <span>
+                        MiniJudge
+                    </span>
+
+                </div>
+
+
+                <span class="register-eyebrow">
+                    <i class="fa fa-user-plus"></i>
+                    CREATE YOUR ACCOUNT
+                </span>
+
+
+                <h1>
+                    Start your
+                    <span>coding journey.</span>
+                </h1>
+
+
+                <p>
+                    Create your MiniJudge account and join classrooms,
+                    solve programming problems and learn with others.
+                </p>
+
+
+                <div class="register-role">
+
+                    <div class="register-role-icon">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Student Account
+                        </strong>
+
+                        <span>
+                            Your account will be registered as a Student.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Register Card -->
+
+            <div class="register-card">
+
+                <div class="register-card-header">
+
+                    <div class="register-card-icon">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            GET STARTED
+                        </span>
+
+                        <h2>
+                            Create Account
+                        </h2>
+
+                        <p>
+                            Fill in your details below.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="register-error">
+
+                        <i class="fa fa-exclamation-circle"></i>
+
+                        <div>
+
+                            {% for error in form.non_field_errors %}
+
+                                <span>
+                                    {{ error }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <form
+                    method="post"
+                    class="register-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- Username -->
+
+                    <div class="register-field">
+
+                        <label for="{{ form.username.id_for_label }}">
+                            Username
+                        </label>
+
+                        <div class="register-input">
+
+                            <i class="fa fa-user"></i>
+
+                            {{ form.username }}
+
+                        </div>
+
+                        {% if form.username.errors %}
+
+                            <div class="register-field-error">
+                                {{ form.username.errors.0 }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="register-field">
+
+                        <label for="{{ form.email.id_for_label }}">
+                            Email
+                        </label>
+
+                        <div class="register-input">
+
+                            <i class="fa fa-envelope"></i>
+
+                            {{ form.email }}
+
+                        </div>
+
+                        {% if form.email.errors %}
+
+                            <div class="register-field-error">
+                                {{ form.email.errors.0 }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="register-field">
+
+                        <label for="{{ form.password1.id_for_label }}">
+                            Password
+                        </label>
+
+                        <div class="register-input">
+
+                            <i class="fa fa-lock"></i>
+
+                            {{ form.password1 }}
+
+                        </div>
+
+                        {% if form.password1.errors %}
+
+                            <div class="register-field-error">
+                                {{ form.password1.errors.0 }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="register-field">
+
+                        <label for="{{ form.password2.id_for_label }}">
+                            Confirm Password
+                        </label>
+
+                        <div class="register-input">
+
+                            <i class="fa fa-lock"></i>
+
+                            {{ form.password2 }}
+
+                        </div>
+
+                        {% if form.password2.errors %}
+
+                            <div class="register-field-error">
+                                {{ form.password2.errors.0 }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="register-submit"
+                    >
+
+                        <span>
+                            Create Account
+                        </span>
+
+                        <i class="fa fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <div class="register-login">
+
+                    Already have an account?
+
+                    <a href="{% url 'login' %}">
+                        Sign in
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

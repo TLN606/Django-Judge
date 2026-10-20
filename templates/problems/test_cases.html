@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="testcase-page">
+
+    <!-- ========================================= -->
+    <!-- HERO -->
+    <!-- ========================================= -->
+
+    <section class="testcase-hero">
+
+        <div class="testcase-hero-bg"></div>
+
+        <div class="container">
+
+            <div class="testcase-breadcrumb">
+
+                <a href="{% url 'classroom_detail' problem.classroom.id %}">
+                    {{ problem.classroom.name }}
+                </a>
+
+                <span>/</span>
+
+                <a href="{% url 'problem_detail' problem.id %}">
+                    {{ problem.title }}
+                </a>
+
+                <span>/</span>
+
+                <span>Test Cases</span>
+
+            </div>
+
+
+            <div class="testcase-hero-content">
+
+                <div>
+
+                    <div class="testcase-eyebrow">
+                        <i class="fa fa-flask"></i>
+                        Problem Management
+                    </div>
+
+                    <h1>Test Cases</h1>
+
+                    <p>
+                        Manage the test data used to evaluate
+                        student submissions for this problem.
+                    </p>
+
+                </div>
+
+
+                <div class="testcase-problem-card">
+
+                    <div class="testcase-problem-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+                    <div>
+
+                        <span>PROBLEM</span>
+
+                        <strong>{{ problem.title }}</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================================= -->
+
+    <section class="testcase-content">
+
+        <div class="container">
+
+            <!-- TOP BAR -->
+
+            <div class="testcase-toolbar">
+
+                <div>
+
+                    <div class="testcase-section-label">
+                        TEST CASES
+                    </div>
+
+                    <div class="testcase-count">
+                        {{ test_cases|length }}
+                        <span>Test Cases</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Placeholder for CRUD later -->
+                <a
+                href="{% url 'test_case_create' problem.id %}"
+                class="testcase-add-btn"
+                >
+
+                    <i class="fa fa-plus"></i>
+
+                    Add Test Case
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ================================= -->
+            <!-- EMPTY STATE -->
+            <!-- ================================= -->
+
+            {% if not test_cases %}
+
+                <div class="testcase-empty">
+
+                    <div class="testcase-empty-icon">
+
+                        <div class="testcase-flask">
+
+                            <i class="fa fa-flask"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="testcase-empty-content">
+
+                        <span class="testcase-empty-label">
+                            NO TEST DATA
+                        </span>
+
+                        <h2>No Test Cases Yet</h2>
+
+                        <p>
+                            Add test cases to determine how student
+                            submissions will be evaluated.
+                        </p>
+
+                        <p class="testcase-empty-subtext">
+                            You can create sample test cases that
+                            students can see, or hidden test cases
+                            used only by the Online Judge.
+                        </p>
+
+
+                        <!-- Placeholder for CRUD later -->
+                        <a
+                            href="{% url 'test_case_create' problem.id %}"
+                            class="testcase-empty-btn"
+                        >
+
+                            <i class="fa fa-plus"></i>
+
+                            Add First Test Case
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+
+                <!-- ================================= -->
+                <!-- TEST CASE LIST -->
+                <!-- ================================= -->
+
+                <div class="testcase-list">
+
+                    {% for test_case in test_cases %}
+
+                        <article class="testcase-card">
+
+                            <!-- CARD HEADER -->
+
+                            <div class="testcase-card-header">
+
+                                <div class="testcase-number">
+
+                                    <div class="testcase-number-icon">
+                                        <i class="fa fa-flask"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <span>TEST CASE</span>
+
+                                        <h3>
+                                            Test Case #{{ forloop.counter }}
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+
+                                {% if test_case.is_sample %}
+
+                                    <span class="testcase-badge sample">
+                                        <i class="fa fa-eye"></i>
+                                        Sample
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="testcase-badge hidden">
+                                        <i class="fa fa-lock"></i>
+                                        Hidden
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <!-- CARD BODY -->
+
+                            <div class="testcase-card-body">
+
+                                <div class="testcase-data">
+
+                                    <!-- INPUT -->
+
+                                    <div class="testcase-data-block">
+
+                                        <div class="testcase-data-title">
+
+                                            <span>
+                                                <i class="fa fa-sign-in"></i>
+                                                Input
+                                            </span>
+
+                                        </div>
+
+                                        <pre>{{ test_case.input_data }}</pre>
+
+                                    </div>
+
+
+                                    <!-- OUTPUT -->
+
+                                    <div class="testcase-data-block">
+
+                                        <div class="testcase-data-title">
+
+                                            <span>
+                                                <i class="fa fa-sign-out"></i>
+                                                Expected Output
+                                            </span>
+
+                                        </div>
+
+                                        <pre>{{ test_case.expected_output }}</pre>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- CARD FOOTER -->
+
+                            <div class="testcase-card-footer">
+
+                                <span class="testcase-created">
+
+                                    <i class="fa fa-clock-o"></i>
+
+                                    Created
+                                    {{ test_case.created_at|date:"M d, Y" }}
+
+                                </span>
+
+
+                                <div class="testcase-actions">
+
+                                    <!-- CRUD later -->
+
+                                    <a
+                                        href="{% url 'test_case_edit' problem.id test_case.id %}"
+                                        class="testcase-edit-btn"
+                                    >
+                                        <i class="fa fa-pencil"></i>
+                                        Edit
+                                    </a>
+
+
+                                    <a
+                                        href="{% url 'test_case_delete' problem.id test_case.id %}"
+                                        class="testcase-delete-btn"
+                                    >
+                                        <i class="fa fa-trash"></i>
+                                        Delete
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- ================================= -->
+            <!-- BOTTOM INFORMATION -->
+            <!-- ================================= -->
+
+            <div class="testcase-info">
+
+                <div class="testcase-info-icon">
+                    <i class="fa fa-info-circle"></i>
+                </div>
+
+                <div>
+
+                    <strong>About Test Cases</strong>
+
+                    <p>
+                        Sample test cases are visible to students
+                        and help them understand the expected input
+                        and output format. Hidden test cases remain
+                        private and are used by the Online Judge
+                        during submission evaluation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BACK BUTTON -->
+
+            <div class="testcase-back">
+
+                <a href="{% url 'problem_detail' problem.id %}">
+
+                    <i class="fa fa-arrow-left"></i>
+
+                    Back to Problem
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

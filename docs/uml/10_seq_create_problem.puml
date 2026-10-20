@@ -1,0 +1,29 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+skinparam maxMessageSize 170
+
+title Teacher tạo và công bố bài tập
+actor "Teacher" as T
+participant "create_problem" as V
+participant "publish_problem" as P
+database "CSDL" as DB
+actor "Student" as S
+T -> V : POST /problems/classroom/{id}/create/
+V -> DB : Kiểm tra Teacher là chủ lớp
+alt Không có quyền
+  V --> T : Về trang chi tiết lớp
+else Hợp lệ
+  V -> DB : Lưu Problem (draft) và các TestCase
+  V --> T : Chuyển tới trang đề bài
+end
+T -> P : POST /problems/{id}/publish/
+P -> DB : status = published
+P --> T : Thông báo đã công bố
+S -> V : Xem danh sách bài tập
+V --> S : Hiển thị bài published (chỉ Test Case mẫu)
+@enduml

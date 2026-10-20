@@ -1,0 +1,28 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+title Triển khai
+node "Máy phát triển" {
+  artifact "docker-compose.yml" as DC
+  node "web (Docker)" as W1
+  database "db (PostgreSQL 16)" as D1
+}
+cloud "GitHub" as GH {
+  node "GitHub Actions\nlint → test → build → deploy" as CI
+}
+cloud "Render" as R {
+  node "Web Service (Docker)" as W2
+  database "PostgreSQL" as D2
+}
+DC --> W1
+DC --> D1
+W1 --> D1
+GH <.. DC : git push
+CI --> W2 : Deploy Hook
+W2 --> D2
+@enduml

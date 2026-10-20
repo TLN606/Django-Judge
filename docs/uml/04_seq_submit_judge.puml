@@ -1,0 +1,39 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+skinparam maxMessageSize 170
+
+title Nộp bài và chấm tự động
+actor "Student" as S
+participant "submit_solution" as V
+participant "grade_submission" as G
+participant "JudgeService" as J
+participant "Compiler /\nExecutor /\nChecker" as E
+database "CSDL" as DB
+S -> V : POST /submissions/problem/{id}/submit/
+V -> DB : Kiểm tra thành viên, bài published;\nkhóa ProblemAttempt
+alt Attempt đã locked
+  V --> S : Báo lỗi, không tạo Submission
+else Attempt available
+  V -> DB : Tạo Submission(running); Attempt = locked
+  V -> G : grade_submission()
+  G -> DB : Lấy các TestCase
+  G -> J : judge_all(source, tests, limits)
+  J -> E : compile (một lần)
+  alt Lỗi biên dịch
+    J --> G : compile_error
+  else Thành công
+    loop mỗi TestCase
+      J -> E : execute rồi check output
+      E --> J : accepted / wrong_answer / time_limit / runtime_error
+    end
+  end
+  J --> G : danh sách JudgeResult (xóa thư mục tạm)
+  G -> DB : Lưu SubmissionResult, status, score
+  V --> S : Chuyển tới trang kết quả
+end
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+title Kiến trúc hệ thống (Django MVT + bộ chấm)
+actor "Người dùng" as U
+node "Trình duyệt" as B
+node "Web Service (Gunicorn + Django)" {
+  component "WhiteNoise\n(file tĩnh)" as W
+  component "URL Router" as R
+  component "Views" as V
+  component "Templates" as T
+  component "Models / ORM" as M
+  component "Judge Engine\ncompiler → executor → checker" as J
+}
+database "PostgreSQL\n(SQLite khi dev)" as DB
+node "g++ / Python\n(tiến trình con)" as X
+U --> B
+B --> W : /static/
+B --> R : HTTP
+R --> V
+V --> T
+V --> M
+M --> DB
+V --> J
+J --> X : subprocess
+@enduml

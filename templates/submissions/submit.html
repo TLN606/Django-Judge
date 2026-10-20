@@ -1,0 +1,629 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Submit Solution - MiniJudge
+{% endblock %}
+
+
+{% block content %}
+
+<div class="submission-page">
+
+    <div class="submission-container">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="submission-page-header">
+
+            <div class="submission-header-left">
+
+                <div class="submission-eyebrow">
+
+                    <i class="fa fa-code"></i>
+
+                    ONLINE JUDGE
+
+                </div>
+
+
+                <h1>
+                    Submit Solution
+                </h1>
+
+
+                <p>
+                    Submit your source code and let MiniJudge
+                    evaluate your solution automatically.
+                </p>
+
+            </div>
+
+
+            <div class="submission-header-right">
+
+                <a
+                    href="{% url 'problem_detail' problem.id %}"
+                    class="submission-back-btn"
+                >
+
+                    <i class="fa fa-arrow-left"></i>
+
+                    Back to Problem
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             MAIN LAYOUT
+        ====================================================== -->
+
+        <div class="submission-layout">
+
+
+            <!-- =================================================
+                 LEFT COLUMN
+            ================================================== -->
+
+            <div class="submission-main-card">
+
+
+                <form
+                    method="post"
+                    action="{% url 'submit_solution' problem.id %}"
+                    class="submission-form submission-whole-card-form"
+                    id="submissionForm"
+                >
+
+                    {% csrf_token %}
+
+
+                <!-- =================================================
+                     CARD HEADER
+                ================================================== -->
+
+                <div class="submission-card-header">
+
+
+                    <div class="submission-problem-info">
+
+                        <div class="submission-problem-icon">
+
+                            <i class="fa fa-terminal"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                {{ problem.title }}
+                            </h2>
+
+                            <span>
+                                Write your solution below
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="submission-language-wrapper">
+
+                        <label for="{{ form.language.id_for_label }}">
+                            Language
+                        </label>
+
+                        {{ form.language }}
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     CODE EDITOR
+                ================================================== -->
+
+                    <div class="submission-code-wrapper">
+
+
+                        <!-- Editor top bar -->
+
+                        <div class="submission-code-topbar">
+
+
+                            <div class="submission-window-dots">
+
+                                <span></span>
+
+                                <span></span>
+
+                                <span></span>
+
+                            </div>
+
+
+                            <span
+                                class="submission-code-filename"
+                            >
+                                solution.cpp
+                            </span>
+
+
+                            <span
+                                class="submission-code-status"
+                            >
+
+                                <i class="fa fa-circle"></i>
+
+                                Ready
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             CUSTOM EDITOR
+                        ================================================== -->
+
+                        <div class="submission-code-editor">
+
+
+                            <!-- Line numbers -->
+
+                            <div
+                                class="submission-line-numbers"
+                                id="lineNumbers"
+                            >
+
+                                <span>
+                                    1
+                                </span>
+
+                            </div>
+
+
+                            <!-- Editor content -->
+
+                            <div
+                                class="submission-editor-content"
+                            >
+
+
+                                <!-- Syntax layer -->
+
+                                <pre
+                                    id="syntaxHighlight"
+                                    class="submission-syntax-highlight"
+                                    aria-hidden="true"
+                                ></pre>
+
+
+                                <!-- Real input -->
+
+                                <textarea
+                                    id="sourceCodeInput"
+                                    name="{{ form.source_code.html_name }}"
+                                    spellcheck="false"
+                                    autocomplete="off"
+                                    autocorrect="off"
+                                    autocapitalize="off"
+                                >{{ form.source_code.value|default_if_none:"" }}</textarea>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FORM ERRORS
+                    ================================================== -->
+
+                    {% if form.non_field_errors %}
+
+                        <div class="submission-form-errors">
+
+                            {% for error in form.non_field_errors %}
+
+                                <div class="submission-form-error">
+
+                                    <i
+                                        class="fa fa-exclamation-circle"
+                                    ></i>
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if form.source_code.errors %}
+
+                        <div class="submission-form-errors">
+
+                            {% for error in form.source_code.errors %}
+
+                                <div class="submission-form-error">
+
+                                    <i
+                                        class="fa fa-exclamation-circle"
+                                    ></i>
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         EDITOR FOOTER
+                    ================================================== -->
+
+                    <div class="submission-editor-footer">
+
+
+                        <div class="submission-editor-tip">
+
+                            <i class="fa fa-info-circle"></i>
+
+                            <span>
+
+                                Make sure your code reads input
+                                from <strong>stdin</strong>
+                                and writes output to
+                                <strong>stdout</strong>.
+
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="submission-submit-btn"
+                            id="submitButton"
+                        >
+                            <i class="fa fa-paper-plane"></i>
+                            Submit Solution
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT SIDEBAR
+            ================================================== -->
+
+            <aside class="submission-sidebar">
+
+
+                <!-- =================================================
+                     PROBLEM INFORMATION
+                ================================================== -->
+
+                <div class="submission-sidebar-card">
+
+
+                    <div class="submission-sidebar-title">
+
+                        <i class="fa fa-file-code-o"></i>
+
+                        Problem
+
+                    </div>
+
+
+                    <div class="submission-sidebar-problem">
+
+                        <h3>
+                            {{ problem.title }}
+                        </h3>
+
+
+                        <p>
+                            {{ problem.description|truncatechars:180 }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="submission-sidebar-divider"
+                    ></div>
+
+
+                    <!-- Difficulty -->
+
+                    <div class="submission-sidebar-row">
+
+                        <span>
+
+                            <i class="fa fa-signal"></i>
+
+                            Difficulty
+
+                        </span>
+
+
+                        <strong
+                            class="submission-difficulty
+                            submission-difficulty-{{ problem.difficulty }}"
+                        >
+                            {{ problem.get_difficulty_display }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Time -->
+
+                    <div class="submission-sidebar-row">
+
+                        <span>
+
+                            <i class="fa fa-clock-o"></i>
+
+                            Time Limit
+
+                        </span>
+
+
+                        <strong>
+
+                            {{ problem.time_limit }}s
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Memory -->
+
+                    <div class="submission-sidebar-row">
+
+                        <span>
+
+                            <i class="fa fa-database"></i>
+
+                            Memory Limit
+
+                        </span>
+
+
+                        <strong>
+
+                            {{ problem.memory_limit }} MB
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     CHECKLIST
+                ================================================== -->
+
+                <div class="submission-sidebar-card">
+
+
+                    <div class="submission-sidebar-title">
+
+                        <i class="fa fa-check-circle"></i>
+
+                        Before You Submit
+
+                    </div>
+
+
+                    <div class="submission-checklist">
+
+
+                        <div class="submission-check-item">
+
+                            <div class="submission-check-icon">
+
+                                <i class="fa fa-code"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Correct Language
+                                </strong>
+
+                                <span>
+                                    Select the language used
+                                    by your code.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="submission-check-item">
+
+                            <div class="submission-check-icon">
+
+                                <i class="fa fa-terminal"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Standard Input
+                                </strong>
+
+                                <span>
+                                    Read input from stdin.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="submission-check-item">
+
+                            <div class="submission-check-icon">
+
+                                <i class="fa fa-terminal"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Standard Output
+                                </strong>
+
+                                <span>
+                                    Print only the required output.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="submission-check-item">
+
+                            <div class="submission-check-icon">
+
+                                <i class="fa fa-clock-o"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Time Limit
+                                </strong>
+
+                                <span>
+                                    {{ problem.time_limit }}
+                                    seconds.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     CLASSROOM
+                ================================================== -->
+
+                <div
+                    class="submission-sidebar-card
+                    submission-classroom-card"
+                >
+
+
+                    <div class="submission-sidebar-title">
+
+                        <i class="fa fa-users"></i>
+
+                        Classroom
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'classroom_detail' problem.classroom.id %}"
+                        class="submission-classroom-link"
+                    >
+
+
+                        <div class="submission-classroom-icon">
+
+                            <i class="fa fa-graduation-cap"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                {{ problem.classroom.name }}
+                            </strong>
+
+                            <span>
+                                {{ problem.classroom.code }}
+                            </span>
+
+                        </div>
+
+
+                        <i class="fa fa-chevron-right"></i>
+
+
+                    </a>
+
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script
+    src="{% static 'js/custom-editor.js' %}"
+></script>
+
+{% endblock %}

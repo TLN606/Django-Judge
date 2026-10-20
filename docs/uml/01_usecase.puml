@@ -1,0 +1,79 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam ArrowColor #444444
+skinparam packageStyle rectangle
+left to right direction
+skinparam nodesep 10
+skinparam ranksep 60
+
+actor "Student" as S
+actor "Teacher" as T
+actor "Admin" as A
+actor "Online Judge" as J
+
+rectangle "Web Classroom + Online Judge" {
+  usecase "UC01\nĐăng ký tài khoản" as UC01
+  usecase "UC02\nĐăng nhập" as UC02
+  usecase "UC03\nTham gia lớp học" as UC03
+  usecase "UC04\nXem lớp học" as UC04
+  usecase "UC05\nXem bài tập" as UC05
+  usecase "UC06\nSubmit bài" as UC06
+  usecase "UC07\nXem kết quả chấm" as UC07
+  usecase "UC08\nXem lịch sử Submission" as UC08
+
+  usecase "UC09\nTạo lớp học" as UC09
+  usecase "UC10\nQuản lý thành viên lớp" as UC10
+  usecase "UC11\nTạo bài tập" as UC11
+  usecase "UC12\nCập nhật / Xóa bài tập" as UC12
+  usecase "UC13\nQuản lý Test Case" as UC13
+  usecase "UC14\nXem Submission" as UC14
+  usecase "UC15\nXem kết quả chấm" as UC15
+  usecase "UC21\nKick / Ban / Unban" as UC21
+  usecase "UC22\nPublish / Close / Reopen bài" as UC22
+  usecase "UC23\nImport / Export gói bài" as UC23
+  usecase "UC24\nReset lượt nộp" as UC24
+
+  usecase "UC16\nQuản lý tài khoản" as UC16
+  usecase "UC17\nQuản lý dữ liệu lớp học" as UC17
+
+  usecase "UC18\nBiên dịch mã nguồn" as UC18
+  usecase "UC19\nThực thi Test Case" as UC19
+  usecase "UC20\nSo sánh Output,\nxác định kết quả" as UC20
+}
+
+S --> UC01
+S --> UC02
+S --> UC03
+S --> UC04
+S --> UC05
+S --> UC06
+S --> UC07
+S --> UC08
+
+T --> UC02
+T --> UC09
+T --> UC10
+T --> UC11
+T --> UC12
+T --> UC13
+T --> UC14
+T --> UC15
+T --> UC21
+T --> UC22
+T --> UC23
+T --> UC24
+
+A --> UC02
+A --> UC16
+A --> UC17
+
+UC06 ..> UC18 : <<include>>
+UC06 ..> UC19 : <<include>>
+UC06 ..> UC20 : <<include>>
+UC21 ..> UC10 : <<extend>>
+UC18 -- J
+UC19 -- J
+UC20 -- J
+@enduml

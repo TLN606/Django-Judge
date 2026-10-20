@@ -1,0 +1,29 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #444444
+skinparam backgroundColor white
+
+title Tham gia lớp học bằng mã
+actor "Sinh viên" as S
+participant "Trình duyệt" as B
+participant "join_classroom\n(View)" as V
+database "CSDL" as DB
+S -> B : Nhập mã lớp
+B -> V : POST /classrooms/join/
+V -> V : Kiểm tra role == student
+V -> DB : Tìm Classroom theo mã (không phân biệt hoa/thường)
+alt Không tìm thấy
+  V --> B : Lỗi "Classroom code not found."
+else Đang bị Ban
+  V -> DB : Kiểm tra ClassroomBan(is_active)
+  V --> B : Lỗi "You are banned from this classroom."
+else Đã là thành viên
+  V --> B : Thông báo đã tham gia
+else Hợp lệ
+  V -> DB : Tạo ClassroomMember
+  V --> B : Chuyển đến trang chi tiết lớp
+end
+@enduml

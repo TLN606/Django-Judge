@@ -1,0 +1,801 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Submissions - {{ problem.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="submission-list-page">
+
+    <div class="submission-list-container">
+
+        <!-- HEADER -->
+        <div class="submission-list-header">
+
+            <div>
+
+                <div class="submission-list-eyebrow">
+                    SUBMISSIONS
+                </div>
+
+                <h1>
+                    {{ problem.title }}
+                </h1>
+
+                <p>
+                    View submission history and attempt status.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'problem_detail' problem.id %}"
+                class="submission-back-btn"
+            >
+                <i class="fa fa-arrow-left"></i>
+                Back to Problem
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+            SUBMISSION HERO
+        ================================================== -->
+
+        <section class="submission-hero">
+
+            <!-- Decorative background -->
+            <div class="submission-hero-orb submission-hero-orb-right"></div>
+            <div class="submission-hero-orb submission-hero-orb-left"></div>
+
+            <div class="container">
+
+                <div class="row align-items-center">
+
+                    <!-- ==================================================
+                        LEFT
+                    ================================================== -->
+
+                    <div class="col-lg-7">
+
+                        <div class="submission-hero-kicker">
+                            MINI JUDGE CLASSROOM
+                        </div>
+
+                        <h1>
+                            Student Submissions
+                        </h1>
+
+                        <p>
+                            Review student attempts, inspect judging results,
+                            and manage submission history for this problem.
+                        </p>
+
+
+                        <!-- Problem -->
+
+                        <div class="submission-hero-problem">
+
+                            <div class="submission-hero-problem-icon">
+                                <i class="fa fa-code"></i>
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    PROGRAMMING PROBLEM
+                                </span>
+
+                                <strong>
+                                    {{ problem.title }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Features -->
+
+                        <div class="submission-hero-features">
+
+                            <span>
+                                <i class="fa fa-users"></i>
+                                Student Attempts
+                            </span>
+
+                            <span>
+                                <i class="fa fa-check-circle"></i>
+                                Judge Results
+                            </span>
+
+                            <span>
+                                <i class="fa fa-history"></i>
+                                Submission History
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                        RIGHT VISUAL
+                    ================================================== -->
+
+                    <div class="col-lg-5">
+
+                        <div class="submission-hero-visual">
+
+
+                            <!-- Code window -->
+
+                            <div class="submission-code-window">
+
+                                <div class="submission-code-header">
+
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+
+                                    <div>
+                                        OnlineJudge.cpp
+                                    </div>
+
+                                </div>
+
+
+                                <div class="submission-code-body">
+
+                                    <div class="submission-code-line line-long"></div>
+                                    <div class="submission-code-line line-medium"></div>
+                                    <div class="submission-code-line line-short"></div>
+
+                                    <div class="submission-code-line line-long"></div>
+                                    <div class="submission-code-line line-medium"></div>
+
+                                    <div class="submission-code-symbol">
+                                        &lt;/&gt;
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Floating tags -->
+
+                            <div class="submission-lang-tag submission-lang-cpp">
+                                <i class="fa fa-code"></i>
+                                C++
+                            </div>
+
+
+                            <div class="submission-lang-tag submission-lang-python">
+                                <i class="fa fa-code"></i>
+                                Python
+                            </div>
+
+
+                            <div class="submission-result-tag">
+
+                                <i class="fa fa-check-circle"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Judge Complete
+                                    </strong>
+
+                                    <span>
+                                        Results available
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {% if is_teacher %}
+
+        <!-- ========================================= -->
+        <!-- TEACHER -->
+        <!-- ========================================= -->
+
+        <div class="submission-management-card">
+
+            <div class="submission-management-header">
+
+                <div>
+                    <span class="submission-section-label">
+                        CLASSROOM
+                    </span>
+
+                    <h2>
+                        Student Attempts
+                    </h2>
+                </div>
+
+                <div class="submission-class-name">
+                    {{ problem.classroom.name }}
+                </div>
+
+            </div>
+
+
+            <div class="submission-table-wrapper">
+
+                <table class="submission-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Student</th>
+                            <th>Attempt</th>
+                            <th>Latest Result</th>
+                            <th>Score</th>
+                            <th>Last Submitted</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in student_attempts %}
+
+                        <tr>
+
+                            <!-- STUDENT -->
+
+                            <td>
+
+                                <div class="submission-student">
+
+                                    <div class="submission-avatar">
+                                        {{ item.student.username|first|upper }}
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            {{ item.student.username }}
+                                        </strong>
+
+                                        <small>
+                                            {{ item.student.email }}
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- ATTEMPT -->
+
+                            <td>
+
+                                {% if item.attempt.status == 'available' %}
+
+                                    <span class="attempt-badge attempt-available">
+                                        <i class="fa fa-unlock"></i>
+                                        Available
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="attempt-badge attempt-locked">
+                                        <i class="fa fa-lock"></i>
+                                        Locked
+                                    </span>
+
+                                {% endif %}
+
+                                <div class="attempt-count">
+                                    {{ item.attempt.attempt_count }}
+                                    submission{{ item.attempt.attempt_count|pluralize }}
+                                </div>
+
+                            </td>
+
+
+                            <!-- RESULT -->
+
+                            <td>
+
+                                {% if item.submission %}
+
+                                    {% if item.submission.status == 'accepted' %}
+
+                                        <span class="result-badge result-accepted">
+                                            Accepted
+                                        </span>
+
+                                    {% elif item.submission.status == 'wrong_answer' %}
+
+                                        <span class="result-badge result-wrong">
+                                            Wrong Answer
+                                        </span>
+
+                                    {% elif item.submission.status == 'compile_error' %}
+
+                                        <span class="result-badge result-compile">
+                                            Compile Error
+                                        </span>
+
+                                    {% elif item.submission.status == 'time_limit' %}
+
+                                        <span class="result-badge result-time">
+                                            Time Limit
+                                        </span>
+
+                                    {% elif item.submission.status == 'runtime_error' %}
+
+                                        <span class="result-badge result-runtime">
+                                            Runtime Error
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="result-badge">
+                                            {{ item.submission.get_status_display }}
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="no-submission">
+                                        Not submitted
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- SCORE -->
+
+                            <td>
+
+                                {% if item.submission %}
+
+                                    <strong class="submission-score">
+                                        {{ item.submission.score|floatformat:0 }}
+                                    </strong>
+
+                                    <span class="score-max">
+                                        / 100
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="no-submission">
+                                        —
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- LAST SUBMISSION -->
+
+                            <td>
+
+                                {% if item.submission %}
+
+                                    <span class="submission-date">
+                                        {{ item.submission.created_at|date:"d/m/Y H:i" }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="no-submission">
+                                        —
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <div class="submission-actions">
+
+                                    {% if item.submission %}
+
+                                        <a
+                                            href="{% url 'submission_detail' item.submission.id %}"
+                                            class="submission-view-btn"
+                                        >
+                                            <i class="fa fa-eye"></i>
+                                            View
+                                        </a>
+
+                                    {% endif %}
+
+
+                                    {% if item.attempt.status == 'locked' %}
+
+                                        <form
+                                            method="post"
+                                            action="{% url 'reset_attempt' problem.id item.student.id %}"
+                                            onsubmit="return confirm('Reset this student attempt? The previous submissions will NOT be deleted.');"
+                                        >
+
+                                            {% csrf_token %}
+
+                                            <button
+                                                type="submit"
+                                                class="submission-reset-btn"
+                                            >
+                                                <i class="fa fa-refresh"></i>
+                                                Reset
+                                            </button>
+
+                                        </form>
+
+                                    {% else %}
+
+                                        <span class="attempt-ready">
+                                            Ready
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="submission-empty"
+                            >
+
+                                <i class="fa fa-users"></i>
+
+                                <h3>
+                                    No students yet
+                                </h3>
+
+                                <p>
+                                    Students who join this classroom
+                                    will appear here.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- SUBMISSION HISTORY -->
+        <!-- ========================================= -->
+
+        <div class="submission-management-card">
+
+            <div class="submission-management-header">
+
+                <div>
+
+                    <span class="submission-section-label">
+                        HISTORY
+                    </span>
+
+                    <h2>
+                        Submission History
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="submission-table-wrapper">
+
+                <table class="submission-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Student</th>
+                            <th>Language</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                            <th>Time</th>
+                            <th>Submitted</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for submission in submissions %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ submission.user.username }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ submission.get_language_display }}
+                            </td>
+
+                            <td>
+
+                                {% if submission.status == 'accepted' %}
+
+                                    <span class="result-badge result-accepted">
+                                        Accepted
+                                    </span>
+
+                                {% elif submission.status == 'wrong_answer' %}
+
+                                    <span class="result-badge result-wrong">
+                                        Wrong Answer
+                                    </span>
+
+                                {% elif submission.status == 'compile_error' %}
+
+                                    <span class="result-badge result-compile">
+                                        Compile Error
+                                    </span>
+
+                                {% elif submission.status == 'time_limit' %}
+
+                                    <span class="result-badge result-time">
+                                        Time Limit
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="result-badge">
+                                        {{ submission.get_status_display }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <strong>
+                                    {{ submission.score|floatformat:0 }}
+                                </strong>
+
+                                / 100
+
+                            </td>
+
+                            <td>
+
+                                {% if submission.execution_time %}
+
+                                    {{ submission.execution_time|floatformat:3 }}s
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ submission.created_at|date:"d/m/Y H:i" }}
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="submission-empty"
+                            >
+
+                                No submissions yet.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- ========================================= -->
+        <!-- STUDENT -->
+        <!-- ========================================= -->
+
+        <div class="submission-management-card">
+
+            <div class="submission-management-header">
+
+                <div>
+
+                    <span class="submission-section-label">
+                        MY SUBMISSIONS
+                    </span>
+
+                    <h2>
+                        Submission History
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="submission-table-wrapper">
+
+                <table class="submission-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Language</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                            <th>Execution Time</th>
+                            <th>Submitted</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for submission in submissions %}
+
+                        <tr>
+
+                            <td>
+                                {{ submission.get_language_display }}
+                            </td>
+
+                            <td>
+
+                                {% if submission.status == 'accepted' %}
+
+                                    <span class="result-badge result-accepted">
+                                        Accepted
+                                    </span>
+
+                                {% elif submission.status == 'wrong_answer' %}
+
+                                    <span class="result-badge result-wrong">
+                                        Wrong Answer
+                                    </span>
+
+                                {% elif submission.status == 'compile_error' %}
+
+                                    <span class="result-badge result-compile">
+                                        Compile Error
+                                    </span>
+
+                                {% elif submission.status == 'time_limit' %}
+
+                                    <span class="result-badge result-time">
+                                        Time Limit
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="result-badge">
+                                        {{ submission.get_status_display }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ submission.score|floatformat:0 }} / 100
+                            </td>
+
+                            <td>
+
+                                {% if submission.execution_time %}
+                                    {{ submission.execution_time|floatformat:3 }}s
+                                {% else %}
+                                    —
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ submission.created_at|date:"d/m/Y H:i" }}
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{% url 'submission_detail' submission.id %}"
+                                    class="submission-view-btn"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="submission-empty"
+                            >
+                                No submissions yet.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="testcase-delete-page">
+
+    <!-- HERO -->
+
+    <section class="testcase-delete-hero">
+
+        <div class="testcase-delete-hero-bg"></div>
+
+        <div class="container">
+
+            <div class="testcase-delete-breadcrumb">
+
+                <a href="{% url 'classroom_detail' problem.classroom.id %}">
+                    {{ problem.classroom.name }}
+                </a>
+
+                <span>/</span>
+
+                <a href="{% url 'problem_detail' problem.id %}">
+                    {{ problem.title }}
+                </a>
+
+                <span>/</span>
+
+                <a href="{% url 'test_case_list' problem.id %}">
+                    Test Cases
+                </a>
+
+                <span>/</span>
+
+                <span>Delete</span>
+
+            </div>
+
+            <div class="testcase-delete-heading">
+
+                <div class="testcase-delete-eyebrow">
+
+                    <i class="fa fa-trash"></i>
+
+                    Test Case Management
+
+                </div>
+
+                <h1>Delete Test Case</h1>
+
+                <p>
+                    Remove a test case from
+                    <strong>{{ problem.title }}</strong>.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTENT -->
+
+    <section class="testcase-delete-content">
+
+        <div class="container">
+
+            <div class="testcase-delete-card">
+
+                <div class="testcase-delete-icon">
+
+                    <i class="fa fa-trash"></i>
+
+                </div>
+
+
+                <div class="testcase-delete-body">
+
+                    <span class="testcase-delete-label">
+                        CONFIRM ACTION
+                    </span>
+
+                    <h2>
+                        Delete Test Case #{{ test_case.id }}?
+                    </h2>
+
+                    <p>
+                        Are you sure you want to delete this test case?
+                        This action cannot be undone.
+                    </p>
+
+
+                    <!-- TEST CASE PREVIEW -->
+
+                    <div class="testcase-delete-preview">
+
+                        <div>
+
+                            <span>INPUT</span>
+
+                            <pre>{{ test_case.input_data }}</pre>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>EXPECTED OUTPUT</span>
+
+                            <pre>{{ test_case.expected_output }}</pre>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if test_case.is_sample %}
+
+                        <div class="testcase-delete-warning">
+
+                            <i class="fa fa-exclamation-triangle"></i>
+
+                            This is currently a
+                            <strong>Sample Test Case</strong>.
+                            Students can see it on the problem page.
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- ACTIONS -->
+
+                    <form
+                        method="post"
+                        class="testcase-delete-actions"
+                    >
+
+                        {% csrf_token %}
+
+                        <a
+                            href="{% url 'test_case_list' problem.id %}"
+                            class="testcase-delete-cancel"
+                        >
+
+                            <i class="fa fa-arrow-left"></i>
+
+                            Cancel
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="testcase-delete-confirm"
+                        >
+
+                            <i class="fa fa-trash"></i>
+
+                            Delete Test Case
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

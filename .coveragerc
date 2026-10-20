@@ -1,0 +1,20 @@
+[run]
+source = .
+branch = False
+omit =
+    */migrations/*
+    manage.py
+    */tests.py
+    */test_*.py
+    config/testing.py
+    config/wsgi.py
+    config/asgi.py
+    */admin.py
+    */apps.py
+    .venv/*
+    venv/*
+    */views_backup.py
+
+[report]
+show_missing = True
+skip_covered = False

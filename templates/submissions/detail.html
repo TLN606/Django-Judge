@@ -1,0 +1,597 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Submission #{{ submission.id }} - MiniJudge
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/submissions.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="submission-detail-page">
+
+    <div class="submission-detail-container">
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <div class="submission-detail-header">
+
+            <div>
+
+                <div class="submission-detail-eyebrow">
+                    <i class="fa fa-terminal"></i>
+                    ONLINE JUDGE
+                </div>
+
+                <h1>
+                    Submission #{{ submission.id }}
+                </h1>
+
+                <p>
+                    {{ submission.problem.title }}
+                </p>
+
+            </div>
+
+
+            <div class="submission-detail-header-actions">
+
+                <a
+                    href="{% url 'submission_list' submission.problem.id %}"
+                    class="submission-detail-back-btn"
+                >
+                    <i class="fa fa-arrow-left"></i>
+                    Back to Submissions
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SUMMARY CARD
+        ====================================================== -->
+
+        <div class="submission-result-summary">
+
+            <div class="submission-result-main">
+
+                <div class="submission-result-icon
+                    {% if submission.status == 'accepted' %}
+                        result-icon-success
+                    {% elif submission.status == 'wrong_answer' %}
+                        result-icon-danger
+                    {% else %}
+                        result-icon-warning
+                    {% endif %}
+                ">
+
+                    {% if submission.status == 'accepted' %}
+
+                        <i class="fa fa-check"></i>
+
+                    {% elif submission.status == 'wrong_answer' %}
+
+                        <i class="fa fa-times"></i>
+
+                    {% elif submission.status == 'compile_error' %}
+
+                        <i class="fa fa-code"></i>
+
+                    {% elif submission.status == 'runtime_error' %}
+
+                        <i class="fa fa-bug"></i>
+
+                    {% elif submission.status == 'time_limit' %}
+
+                        <i class="fa fa-clock-o"></i>
+
+                    {% else %}
+
+                        <i class="fa fa-exclamation"></i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+
+                    <span class="submission-result-label">
+                        RESULT
+                    </span>
+
+                    <h2>
+                        {{ submission.get_status_display }}
+                    </h2>
+
+                    <p>
+                        Submitted by
+                        <strong>{{ submission.user.username }}</strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="submission-result-score">
+
+                <span>
+                    SCORE
+                </span>
+
+                <strong>
+                    {{ submission.score|floatformat:0 }}
+                </strong>
+
+                <small>
+                    / 100
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             STATISTICS
+        ====================================================== -->
+
+        <div class="submission-stat-grid">
+
+            <div class="submission-stat-card">
+
+                <div class="submission-stat-icon">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+
+                <div>
+                    <span>TEST CASES</span>
+
+                    <strong>
+                        {{ passed_tests }}/{{ total_tests }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="submission-stat-card">
+
+                <div class="submission-stat-icon">
+                    <i class="fa fa-clock-o"></i>
+                </div>
+
+                <div>
+                    <span>EXECUTION TIME</span>
+
+                    <strong>
+                        {% if submission.execution_time %}
+                            {{ submission.execution_time|floatformat:4 }} s
+                        {% else %}
+                            -
+                        {% endif %}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="submission-stat-card">
+
+                <div class="submission-stat-icon">
+                    <i class="fa fa-code"></i>
+                </div>
+
+                <div>
+                    <span>LANGUAGE</span>
+
+                    <strong>
+                        {{ submission.get_language_display }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="submission-stat-card">
+
+                <div class="submission-stat-icon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+
+                <div>
+                    <span>SUBMITTED</span>
+
+                    <strong>
+                        {{ submission.created_at|date:"d/m/Y H:i" }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PROGRESS
+        ====================================================== -->
+
+        {% if total_tests > 0 %}
+
+        <div class="submission-progress-card">
+
+            <div class="submission-progress-header">
+
+                <div>
+
+                    <span>
+                        JUDGE PROGRESS
+                    </span>
+
+                    <strong>
+                        {{ passed_tests }} / {{ total_tests }}
+                        tests passed
+                    </strong>
+
+                </div>
+
+                <div class="submission-progress-percent">
+                    {{ submission.score|floatformat:0 }}%
+                </div>
+
+            </div>
+
+
+            <div class="submission-progress-bar">
+
+                <div
+                    class="submission-progress-fill"
+                    data-score="{{ submission.score|default:0 }}"
+                ></div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =====================================================
+             TEST CASE RESULTS
+        ====================================================== -->
+
+        <div class="submission-tests-card">
+
+            <div class="submission-tests-header">
+
+                <div>
+
+                    <span class="submission-detail-section-label">
+                        JUDGE RESULTS
+                    </span>
+
+                    <h2>
+                        Test Case Results
+                    </h2>
+
+                    <p>
+                        Detailed result for every test case.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="submission-test-list">
+
+                {% for result in test_results %}
+
+                <div class="submission-test-item">
+
+                    <!-- TEST HEADER -->
+
+                    <div class="submission-test-header">
+
+                        <div class="submission-test-title">
+
+                            <div class="submission-test-number">
+
+                                {{ forloop.counter }}
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Test Case {{ forloop.counter }}
+                                </strong>
+
+                                {% if result.test_case.is_sample %}
+
+                                    <span class="submission-sample-badge">
+                                        SAMPLE
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="submission-test-meta">
+
+                            {% if result.execution_time %}
+
+                                <span>
+                                    <i class="fa fa-clock-o"></i>
+                                    {{ result.execution_time|floatformat:4 }} s
+                                </span>
+
+                            {% endif %}
+
+
+                            <span
+                                class="
+                                    submission-test-status
+                                    {% if result.status == 'accepted' %}
+                                        test-status-accepted
+                                    {% elif result.status == 'wrong_answer' %}
+                                        test-status-wrong
+                                    {% elif result.status == 'compile_error' %}
+                                        test-status-compile
+                                    {% elif result.status == 'runtime_error' %}
+                                        test-status-runtime
+                                    {% elif result.status == 'time_limit' %}
+                                        test-status-time
+                                    {% else %}
+                                        test-status-error
+                                    {% endif %}
+                                "
+                            >
+
+                                {% if result.status == 'accepted' %}
+
+                                    <i class="fa fa-check"></i>
+
+                                {% elif result.status == 'wrong_answer' %}
+
+                                    <i class="fa fa-times"></i>
+
+                                {% elif result.status == 'compile_error' %}
+
+                                    <i class="fa fa-code"></i>
+
+                                {% elif result.status == 'runtime_error' %}
+
+                                    <i class="fa fa-bug"></i>
+
+                                {% elif result.status == 'time_limit' %}
+
+                                    <i class="fa fa-clock-o"></i>
+
+                                {% else %}
+
+                                    <i class="fa fa-exclamation"></i>
+
+                                {% endif %}
+
+                                {{ result.get_status_display }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TEST BODY -->
+
+                    <div class="submission-test-body">
+
+
+                        <!-- INPUT -->
+
+                        <div class="submission-output-panel">
+
+                            <div class="submission-output-header">
+
+                                <span>
+                                    <i class="fa fa-sign-in"></i>
+                                    INPUT
+                                </span>
+
+                            </div>
+
+                            <pre>{{ result.test_case.input_data|default:"(empty input)" }}</pre>
+
+                        </div>
+
+
+                        <!-- ACTUAL OUTPUT -->
+
+                        <div class="submission-output-panel">
+
+                            <div class="submission-output-header">
+
+                                <span>
+                                    <i class="fa fa-terminal"></i>
+                                    YOUR OUTPUT
+                                </span>
+
+                            </div>
+
+                            <pre>{{ result.actual_output|default:"(no output)" }}</pre>
+
+                        </div>
+
+
+                        <!-- EXPECTED OUTPUT -->
+
+                        {% if is_teacher or result.test_case.is_sample %}
+
+                        <div class="submission-output-panel">
+
+                            <div class="submission-output-header">
+
+                                <span>
+                                    <i class="fa fa-bullseye"></i>
+                                    EXPECTED OUTPUT
+                                </span>
+
+                            </div>
+
+                            <pre>{{ result.test_case.expected_output }}</pre>
+
+                        </div>
+
+                        {% else %}
+
+                        <div class="submission-hidden-panel">
+
+                            <div>
+
+                                <i class="fa fa-lock"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Hidden Test Case
+                                    </strong>
+
+                                    <span>
+                                        Expected output is hidden.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- ERROR -->
+
+                        {% if result.error_message %}
+
+                        <div class="submission-error-panel">
+
+                            <div class="submission-error-title">
+
+                                <i class="fa fa-warning"></i>
+
+                                JUDGE MESSAGE
+
+                            </div>
+
+                            <pre>{{ result.error_message }}</pre>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                {% empty %}
+
+                <div class="submission-no-results">
+
+                    <i class="fa fa-flask"></i>
+
+                    <h3>
+                        No test results available
+                    </h3>
+
+                    <p>
+                        This submission does not have any
+                        recorded test case results.
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SOURCE CODE
+        ====================================================== -->
+
+        <div class="submission-source-card">
+
+            <div class="submission-source-header">
+
+                <div>
+
+                    <span class="submission-detail-section-label">
+                        SOURCE CODE
+                    </span>
+
+                    <h2>
+                        Submitted Code
+                    </h2>
+
+                </div>
+
+                <div class="submission-source-language">
+                    <i class="fa fa-code"></i>
+                    {{ submission.get_language_display }}
+                </div>
+
+            </div>
+
+
+            <pre class="submission-source-code"><code>{{ submission.source_code }}</code></pre>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const progress = document.querySelector(
+        '.submission-progress-fill'
+    );
+
+    if (!progress) {
+        return;
+    }
+
+    const score = parseFloat(
+        progress.dataset.score
+    ) || 0;
+
+    progress.style.width = score + '%';
+});
+</script>
+{% endblock %}

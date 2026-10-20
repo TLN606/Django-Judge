@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="problem-list-page">
+
+    <!-- Hero -->
+
+    <section class="problem-list-hero">
+
+        <div class="problem-list-hero-bg"></div>
+
+        <div class="container">
+
+            <div class="problem-list-hero-content">
+
+                <div class="problem-list-eyebrow">
+                    <i class="fa fa-code"></i>
+                    PROGRAMMING PROBLEMS
+                </div>
+
+                <h1>
+                    Solve.
+                    <span>Learn.</span>
+                    Improve.
+                </h1>
+
+                <p>
+                    Practice programming problems from your classrooms
+                    and improve your coding skills.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Problems -->
+
+    <section class="problem-list-content">
+
+        <div class="container">
+
+            <div class="problem-list-header">
+
+                <div>
+
+                    <span class="problem-list-label">
+                        PROBLEM LIBRARY
+                    </span>
+
+                    <h2>
+                        All Problems
+                    </h2>
+
+                </div>
+
+                <div class="problem-list-count">
+
+                    <strong>
+                        {{ problems|length }}
+                    </strong>
+
+                    <span>
+                        Problems
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {% if problems %}
+
+                <div class="problem-list-grid">
+
+                    {% for problem in problems %}
+
+                        <div class="problem-list-card">
+
+                            <div class="problem-card-top">
+
+                                <div class="problem-card-icon">
+                                    <i class="fa fa-code"></i>
+                                </div>
+
+                                <span class="
+                                    problem-difficulty
+                                    problem-difficulty-{{ problem.difficulty }}
+                                ">
+                                    {{ problem.get_difficulty_display }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="problem-card-body">
+
+                                <h3>
+                                    {{ problem.title }}
+                                </h3>
+
+                                <p>
+                                    {{ problem.description|truncatechars:120 }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="problem-card-meta">
+
+                                <div>
+
+                                    <i class="fa fa-users"></i>
+
+                                    <span>
+                                        {{ problem.classroom.name }}
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    <i class="fa fa-clock-o"></i>
+
+                                    <span>
+                                        {{ problem.time_limit }}s
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    <i class="fa fa-database"></i>
+
+                                    <span>
+                                        {{ problem.memory_limit }} MB
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="problem-card-footer">
+
+                                <span class="problem-author">
+
+                                    <i class="fa fa-user"></i>
+
+                                    {{ problem.created_by.username }}
+
+                                </span>
+
+
+                                <a
+                                    href="{% url 'problem_detail' problem.id %}"
+                                    class="problem-view-btn"
+                                >
+
+                                    View Problem
+
+                                    <i class="fa fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="problem-list-empty">
+
+                    <div class="problem-empty-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+
+                    <h3>
+                        No Problems Yet
+                    </h3>
+
+                    <p>
+                        There are currently no programming problems
+                        available.
+                    </p>
+
+                    <a
+                        href="{% url 'classroom_list' %}"
+                        class="problem-empty-btn"
+                    >
+                        <i class="fa fa-users"></i>
+                        Browse Classrooms
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

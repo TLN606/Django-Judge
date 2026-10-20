@@ -1,0 +1,497 @@
+{% load static %}
+
+<!-- Footer Start -->
+<footer class="minijudge-footer">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <!-- Brand -->
+            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+
+                <div class="minijudge-footer-brand">
+
+                    <div class="minijudge-footer-logo">
+                        <i class="fas fa-code"></i>
+                    </div>
+
+                    <div>
+                        <h4>Mini<span>Judge</span></h4>
+                        <small>CLASSROOM</small>
+                    </div>
+
+                </div>
+
+                <p class="minijudge-footer-description">
+                    A programming learning platform that combines
+                    classrooms, coding problems, test cases and
+                    online judging in one place.
+                </p>
+
+                <div class="minijudge-footer-social">
+
+                    <a href="#" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <a href="#" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+
+                    <a href="#" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Platform -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+
+                <h5 class="minijudge-footer-title">
+                    PLATFORM
+                </h5>
+
+                <ul class="minijudge-footer-links">
+
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-angle-right"></i>
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'classroom_list' %}">
+                            <i class="fas fa-angle-right"></i>
+                            Classrooms
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Problems
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Online Judge
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Features -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+
+                <h5 class="minijudge-footer-title">
+                    FEATURES
+                </h5>
+
+                <ul class="minijudge-footer-links">
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Test Cases
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Submissions
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Leaderboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-angle-right"></i>
+                            Documentation
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- System -->
+            <div class="col-lg-3 col-md-6">
+
+                <h5 class="minijudge-footer-title">
+                    SYSTEM
+                </h5>
+
+                <div class="minijudge-footer-info">
+
+                    <p>
+                        <i class="fas fa-layer-group"></i>
+                        Classroom-based learning
+                    </p>
+
+                    <p>
+                        <i class="fas fa-terminal"></i>
+                        Automated code judging
+                    </p>
+
+                    <p>
+                        <i class="fas fa-flask"></i>
+                        Custom test cases
+                    </p>
+
+                    <p>
+                        <i class="fas fa-chart-line"></i>
+                        Submission tracking
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bottom -->
+    <div class="minijudge-footer-bottom">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6 text-center text-md-left">
+
+                    <p class="minijudge-copyright">
+                        &copy; {% now "Y" %}
+                        <strong>MiniJudge Classroom</strong>.
+                        All Rights Reserved.
+                    </p>
+
+                </div>
+
+                <div class="col-md-6 text-center text-md-right">
+
+                    <div class="minijudge-footer-bottom-links">
+
+                        <a href="#">Privacy</a>
+
+                        <span>•</span>
+
+                        <a href="#">Terms</a>
+
+                        <span>•</span>
+
+                        <a href="#">Help</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+<!-- Footer End -->
+
+
+<style>
+
+.minijudge-footer {
+    margin-top: 90px;
+    background: #44425A;
+    color: #ffffff;
+}
+
+.minijudge-footer .container {
+    position: relative;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.minijudge-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 20px;
+}
+
+.minijudge-footer-logo {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FF6600;
+    border-radius: 10px;
+
+    color: #ffffff;
+    font-size: 19px;
+
+    box-shadow: 0 6px 18px rgba(255, 102, 0, 0.25);
+}
+
+.minijudge-footer-brand h4 {
+    margin: 0;
+    color: #ffffff;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.minijudge-footer-brand h4 span {
+    color: #FF6600;
+}
+
+.minijudge-footer-brand small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.minijudge-footer-description {
+    max-width: 430px;
+
+    margin-bottom: 22px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SOCIAL
+========================= */
+
+.minijudge-footer-social {
+    display: flex;
+    gap: 8px;
+}
+
+.minijudge-footer-social a {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.minijudge-footer-social a:hover {
+    background: #FF6600;
+    border-color: #FF6600;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   TITLES
+========================= */
+
+.minijudge-footer-title {
+    margin-bottom: 20px;
+
+    color: #FF6600;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+.minijudge-footer-links {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.minijudge-footer-links li {
+    margin-bottom: 11px;
+}
+
+.minijudge-footer-links a {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.minijudge-footer-links a i {
+    color: #FF6600;
+    font-size: 9px;
+}
+
+.minijudge-footer-links a:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+
+/* =========================
+   SYSTEM INFO
+========================= */
+
+.minijudge-footer-info p {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 13px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 11px;
+}
+
+.minijudge-footer-info p i {
+    width: 17px;
+
+    color: #FF6600;
+
+    text-align: center;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.minijudge-footer-bottom {
+    padding: 20px 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.minijudge-copyright {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+}
+
+.minijudge-copyright strong {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.minijudge-footer-bottom-links {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.minijudge-footer-bottom-links a {
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.minijudge-footer-bottom-links a:hover {
+    color: #FF6600;
+}
+
+.minijudge-footer-bottom-links span {
+    color: rgba(255, 255, 255, 0.2);
+
+    font-size: 9px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767px) {
+
+    .minijudge-footer {
+        margin-top: 60px;
+    }
+
+    .minijudge-footer-description {
+        max-width: none;
+    }
+
+    .minijudge-footer-bottom-links {
+        margin-top: 8px;
+    }
+
+}
+
+</style>

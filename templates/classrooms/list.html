@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Classrooms - MiniJudge
+{% endblock %}
+
+{% block content %}
+
+<div class="classroom-page">
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section class="classroom-hero">
+
+        <div class="classroom-hero-decoration hero-circle-left"></div>
+        <div class="classroom-hero-decoration hero-circle-right"></div>
+
+        <div class="classroom-hero-dots"></div>
+
+        <div class="container classroom-hero-container">
+
+            <div class="row align-items-center">
+
+                <!-- Hero Text -->
+                <div class="col-lg-7">
+
+                    <div class="classroom-eyebrow">
+                        MiniJudge Classroom
+                    </div>
+
+                    <h1>
+                        Classrooms
+                    </h1>
+
+
+                    <p>
+                        Learn programming, practice coding,
+                        and improve your problem solving skills.
+                    </p>
+
+                </div>
+
+
+                <!-- Hero Button -->
+                <div class="col-lg-5">
+
+                    <div class="classroom-hero-visual">
+
+                        <div class="code-window">
+
+                            <div class="code-window-header">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+                            <div class="code-window-body">
+
+                                <div class="code-line code-line-long"></div>
+                                <div class="code-line code-line-medium"></div>
+                                <div class="code-line code-line-short"></div>
+
+                                <div class="code-symbol">
+                                    &lt;/&gt;
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="language-tag language-cpp">
+                            C++
+                        </div>
+
+                        <div class="language-tag language-python">
+                            PYTHON
+                        </div>
+
+                        <div class="language-tag language-algorithm">
+                            ALGORITHMS
+                        </div>
+
+                    </div>
+
+                    <div class="classroom-hero-button">
+
+                        <a href="/"
+                           class="btn btn-primary">
+
+                            <i class="fa fa-home mr-2"></i>
+
+                            Home
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CLASSROOM SECTION
+    ================================================== -->
+
+    <section class="classroom-section">
+
+        <!-- Background decoration -->
+
+        <div class="classroom-bg-circle classroom-bg-circle-left"></div>
+
+        <div class="classroom-bg-circle classroom-bg-circle-right"></div>
+
+        <div class="classroom-bg-dots"></div>
+
+
+        <div class="container classroom-section-container">
+
+            <!-- Section Heading -->
+
+        <div class="classroom-section-title">
+
+            <div class="classroom-section-heading">
+
+                <div>
+
+                    <div class="classroom-section-eyebrow">
+                        Learning Environment
+                    </div>
+
+                    <h2>
+                        Available Classrooms
+                    </h2>
+
+                </div>
+
+
+                <div class="classroom-section-actions">
+
+                    {% if user.is_authenticated and user.role == 'teacher' %}
+
+                        <a
+                            href="{% url 'create_classroom' %}"
+                            class="classroom-create-btn"
+                        >
+                            <i class="fa fa-plus"></i>
+                            Create Classroom
+                        </a>
+
+                    {% endif %}
+
+
+                    {% if user.is_authenticated and user.role == 'student' %}
+
+                        <a
+                            href="{% url 'join_classroom' %}"
+                            class="classroom-join-btn"
+                        >
+                            <i class="fa fa-key"></i>
+                            Join Classroom
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <p>
+                Join a classroom to access lessons,
+                assignments, programming problems
+                and Online Judge activities.
+            </p>
+
+        </div>
+
+
+            <!-- Classroom Grid -->
+
+            <div class="row classroom-grid">
+
+                {% for classroom in classrooms %}
+
+                <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
+
+                    <div class="classroom-card">
+
+                        <!-- Card Header -->
+
+                        <div class="classroom-card-header">
+
+                            <span class="classroom-badge">
+                                Classroom
+                            </span>
+
+                            <h3>
+                                {{ classroom.name }}
+                            </h3>
+
+
+                            <div class="classroom-card-code-icon">
+
+                                &lt;/&gt;
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Card Body -->
+
+                        <div class="classroom-card-body">
+
+                            {% if classroom.description %}
+
+                            <p class="classroom-description">
+
+                                {{ classroom.description }}
+
+                            </p>
+
+                            {% else %}
+
+                            <p class="classroom-description">
+
+                                Programming classroom for
+                                learning and practicing coding.
+
+                            </p>
+
+                            {% endif %}
+
+
+                            <!-- Instructor -->
+
+                            <div class="classroom-instructor">
+
+                                <div class="classroom-instructor-icon">
+
+                                    <i class="fa fa-user"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <span class="classroom-label">
+                                        Instructor
+                                    </span>
+
+                                    <strong>
+                                        {{ classroom.teacher.username }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Class Code -->
+
+                            <div class="classroom-code">
+
+                                <span class="classroom-code-label">
+                                    Class Code
+                                </span>
+
+                                <span class="classroom-code-value">
+                                    {{ classroom.code }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Enter -->
+
+                            <a href="{% url 'classroom_detail' classroom.id %}"
+                                class="classroom-enter-btn">
+
+                                <span>
+                                    Enter Classroom
+                                </span>
+
+                                <i class="fa fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% empty %}
+
+
+                <!-- Empty -->
+
+                <div class="col-12">
+
+                    <div class="classroom-empty">
+
+                        <div class="classroom-empty-icon">
+
+                            <i class="fa fa-graduation-cap"></i>
+
+                        </div>
+
+                        <h3>
+                            No Classrooms Yet
+                        </h3>
+
+                        <p>
+
+                            There are currently no classrooms available.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

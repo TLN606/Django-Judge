@@ -1,0 +1,999 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Problem - MiniJudge Classroom
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/problem-create.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="problem-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="problem-hero">
+
+        <div class="problem-hero-grid"></div>
+
+        <div class="problem-hero-glow hero-glow-left"></div>
+        <div class="problem-hero-glow hero-glow-right"></div>
+
+
+        <div class="problem-hero-container">
+
+            <div class="problem-hero-content">
+
+                <div class="problem-hero-kicker">
+                    MINI JUDGE CLASSROOM
+                </div>
+
+                <h1>
+                    Create a New Problem
+                </h1>
+
+                <p>
+                    Build a programming challenge for your students
+                    and configure how it will be judged.
+                </p>
+
+
+                <div class="problem-hero-tags">
+
+                    <span class="hero-tag">
+                        <i class="fas fa-code"></i>
+                        Programming Problem
+                    </span>
+
+                    <span class="hero-tag">
+                        <i class="fas fa-flask"></i>
+                        Online Judge
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="problem-hero-visual">
+
+                <div class="hero-code-card">
+
+                    <span class="code-bracket">
+                        &lt;
+                    </span>
+
+                    <span class="code-slash">
+                        /
+                    </span>
+
+                    <span class="code-bracket">
+                        &gt;
+                    </span>
+
+                </div>
+
+
+                <div class="hero-ring ring-1"></div>
+
+                <div class="hero-ring ring-2"></div>
+
+                <div class="hero-dot dot-1"></div>
+
+                <div class="hero-dot dot-2"></div>
+
+                <div class="hero-dot dot-3"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CONTENT AREA
+    ====================================================== -->
+
+    <main class="problem-content">
+
+        <div class="problem-content-container">
+
+
+            <!-- =================================================
+                 TOP NAV
+            ================================================== -->
+
+            <div class="problem-toolbar">
+
+                <a
+                    href="{% url 'classroom_detail' classroom.id %}"
+                    class="problem-back-link"
+                >
+                    <i class="fas fa-arrow-left"></i>
+
+                    Back to Classroom
+                </a>
+
+
+                <div class="problem-draft-badge">
+
+                    <span></span>
+
+                    DRAFT
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MAIN EDITOR
+            ================================================== -->
+
+            <div class="problem-editor">
+
+                <form
+                    method="POST"
+                    id="problem-create-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- =================================================
+                         01. PROBLEM INFORMATION
+                    ================================================== -->
+
+                    <section class="editor-section">
+
+                        <div class="section-header">
+
+                            <div class="section-header-main">
+
+                                <div class="section-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+
+
+                                <div>
+
+                                    <div class="section-kicker">
+                                        01 · STATEMENT
+                                    </div>
+
+                                    <h2>
+                                        Problem Information
+                                    </h2>
+
+                                    <p>
+                                        Define the problem statement and input/output requirements.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Problem Title -->
+
+                        <div class="field-block">
+
+                            <label
+                                for="{{ form.title.id_for_label }}"
+                            >
+                                Problem Title
+                            </label>
+
+                            {{ form.title }}
+
+                            {% if form.title.errors %}
+
+                                <div class="problem-form-error">
+                                    {{ form.title.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- Description -->
+
+                        <div class="field-block">
+
+                            <div class="field-label-row">
+
+                                <label
+                                    for="{{ form.description.id_for_label }}"
+                                >
+                                    Description
+                                </label>
+
+                                <span>
+                                    PROBLEM STATEMENT
+                                </span>
+
+                            </div>
+
+                            {{ form.description }}
+
+                            {% if form.description.errors %}
+
+                                <div class="problem-form-error">
+                                    {{ form.description.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- Input / Output -->
+
+                        <div class="statement-grid">
+
+                            <div class="field-block">
+
+                                <div class="field-label-row">
+
+                                    <label
+                                        for="{{ form.input_description.id_for_label }}"
+                                    >
+                                        Input Description
+                                    </label>
+
+                                    <span>
+                                        STDIN
+                                    </span>
+
+                                </div>
+
+                                {{ form.input_description }}
+
+                                {% if form.input_description.errors %}
+
+                                    <div class="problem-form-error">
+                                        {{ form.input_description.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <div class="field-block">
+
+                                <div class="field-label-row">
+
+                                    <label
+                                        for="{{ form.output_description.id_for_label }}"
+                                    >
+                                        Output Description
+                                    </label>
+
+                                    <span>
+                                        STDOUT
+                                    </span>
+
+                                </div>
+
+                                {{ form.output_description }}
+
+                                {% if form.output_description.errors %}
+
+                                    <div class="problem-form-error">
+                                        {{ form.output_description.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Constraints -->
+
+                        <div class="field-block">
+
+                            <div class="field-label-row">
+
+                                <label
+                                    for="{{ form.constraints.id_for_label }}"
+                                >
+                                    Constraints
+                                </label>
+
+                                <span>
+                                    LIMITS
+                                </span>
+
+                            </div>
+
+                            {{ form.constraints }}
+
+                            {% if form.constraints.errors %}
+
+                                <div class="problem-form-error">
+                                    {{ form.constraints.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                         02. JUDGE SETTINGS
+                    ================================================== -->
+
+                    <section class="editor-section">
+
+                        <div class="section-header">
+
+                            <div class="section-header-main">
+
+                                <div class="section-icon">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+
+
+                                <div>
+
+                                    <div class="section-kicker">
+                                        02 · CONFIGURATION
+                                    </div>
+
+                                    <h2>
+                                        Judge Settings
+                                    </h2>
+
+                                    <p>
+                                        Configure difficulty and execution limits.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="judge-settings-grid">
+
+
+                            <!-- Difficulty -->
+
+                            <div class="judge-card">
+
+                                <div class="judge-card-icon">
+                                    <i class="fas fa-signal"></i>
+                                </div>
+
+
+                                <div class="judge-card-content">
+
+                                    <span class="judge-label">
+                                        DIFFICULTY
+                                    </span>
+
+                                    {{ form.difficulty }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- Time Limit -->
+
+                            <div class="judge-card">
+
+                                <div class="judge-card-icon">
+                                    <i class="fas fa-stopwatch"></i>
+                                </div>
+
+
+                                <div class="judge-card-content">
+
+                                    <span class="judge-label">
+                                        TIME LIMIT
+                                    </span>
+
+
+                                    <div class="judge-value-input">
+
+                                        {{ form.time_limit }}
+
+                                        <span>
+                                            SEC
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- Memory -->
+
+                            <div class="judge-card">
+
+                                <div class="judge-card-icon">
+                                    <i class="fas fa-memory"></i>
+                                </div>
+
+
+                                <div class="judge-card-content">
+
+                                    <span class="judge-label">
+                                        MEMORY LIMIT
+                                    </span>
+
+
+                                    <div class="judge-value-input">
+
+                                        {{ form.memory_limit }}
+
+                                        <span>
+                                            MB
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- Language -->
+
+                            <div class="judge-card judge-language-card">
+
+                                <div class="judge-card-icon language-icon">
+                                    <i class="fas fa-terminal"></i>
+                                </div>
+
+
+                                <div class="judge-card-content">
+
+                                    <span class="judge-label">
+                                        DEFAULT LANGUAGE
+                                    </span>
+
+                                    <strong>
+                                        C++17
+                                    </strong>
+
+                                    <small>
+                                        Online Judge
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                         03. TEST CASES
+                    ================================================== -->
+
+                    <section class="editor-section test-case-section">
+
+
+                        <div class="section-header test-section-header">
+
+                            <div class="section-header-main">
+
+                                <div class="section-icon">
+
+                                    <i class="fas fa-flask"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div class="section-kicker">
+                                        03 · TEST DATA
+                                    </div>
+
+                                    <h2>
+                                        Test Cases
+                                    </h2>
+
+                                    <p>
+                                        Add input and expected output used by the Online Judge.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="test-case-count"
+                                class="test-case-count"
+                            >
+                                1 Test Case
+                            </div>
+
+                        </div>
+
+
+
+                        {{ formset.management_form }}
+
+
+
+                        <!-- TEST WORKSPACE -->
+
+                        <div class="test-workspace">
+
+
+                            <!-- Workspace Header -->
+
+                            <div class="workspace-header">
+
+                                <div class="workspace-title">
+
+                                    <span class="terminal-dot red"></span>
+                                    <span class="terminal-dot yellow"></span>
+                                    <span class="terminal-dot green"></span>
+
+                                    <span class="workspace-name">
+                                        Test Data Workspace
+                                    </span>
+
+                                </div>
+
+
+                                <span class="workspace-meta">
+                                    STDIN / STDOUT
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- TEST CASES -->
+
+                            <div id="test-cases-container">
+
+
+                                {% for testcase_form in formset %}
+
+                                    <div class="test-case-card">
+
+
+                                        <!-- CARD HEADER -->
+
+                                        <div class="test-case-header">
+
+                                            <div class="test-case-title">
+
+                                                <span class="test-case-number">
+                                                    {{ forloop.counter }}
+                                                </span>
+
+
+                                                <div>
+
+                                                    <span class="test-case-title-text">
+                                                        Test Case {{ forloop.counter }}
+                                                    </span>
+
+                                                    <small>
+                                                        Judge Input
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="test-case-header-actions">
+
+
+                                                <label class="test-case-sample">
+
+                                                    {{ testcase_form.is_sample }}
+
+                                                    <span>
+                                                        Sample
+                                                    </span>
+
+                                                </label>
+
+
+                                                <button
+                                                    type="button"
+                                                    class="test-case-remove-btn"
+                                                    onclick="removeTestCase(this)"
+                                                >
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <!-- CARD BODY -->
+
+                                        <div class="test-case-body">
+
+
+                                            <!-- INPUT -->
+
+                                            <div class="test-editor">
+
+                                                <div class="test-editor-header">
+
+                                                    <div>
+
+                                                        <i class="fas fa-sign-in-alt"></i>
+
+                                                        INPUT
+
+                                                    </div>
+
+                                                    <span>
+                                                        STDIN
+                                                    </span>
+
+                                                </div>
+
+
+                                                {{ testcase_form.input_data }}
+
+
+                                                {% if testcase_form.input_data.errors %}
+
+                                                    <div class="problem-form-error">
+                                                        {{ testcase_form.input_data.errors }}
+                                                    </div>
+
+                                                {% endif %}
+
+                                            </div>
+
+
+
+                                            <!-- OUTPUT -->
+
+                                            <div class="test-editor">
+
+                                                <div class="test-editor-header">
+
+                                                    <div>
+
+                                                        <i class="fas fa-sign-out-alt"></i>
+
+                                                        EXPECTED OUTPUT
+
+                                                    </div>
+
+                                                    <span>
+                                                        STDOUT
+                                                    </span>
+
+                                                </div>
+
+
+                                                {{ testcase_form.expected_output }}
+
+
+                                                {% if testcase_form.expected_output.errors %}
+
+                                                    <div class="problem-form-error">
+                                                        {{ testcase_form.expected_output.errors }}
+                                                    </div>
+
+                                                {% endif %}
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        {{ testcase_form.id }}
+
+
+                                        <div class="test-case-delete-field">
+
+                                            {{ testcase_form.DELETE }}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+
+                            <!-- =================================================
+                                 EMPTY TEST CASE TEMPLATE
+                            ================================================== -->
+
+                            <template id="empty-test-case-template">
+
+                                <div class="test-case-card">
+
+
+                                    <div class="test-case-header">
+
+                                        <div class="test-case-title">
+
+                                            <span class="test-case-number">
+                                                __NUMBER__
+                                            </span>
+
+
+                                            <div>
+
+                                                <span class="test-case-title-text">
+                                                    Test Case __NUMBER__
+                                                </span>
+
+                                                <small>
+                                                    Judge Input
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="test-case-header-actions">
+
+                                            <label class="test-case-sample">
+
+                                                {{ formset.empty_form.is_sample }}
+
+                                                <span>
+                                                    Sample
+                                                </span>
+
+                                            </label>
+
+
+                                            <button
+                                                type="button"
+                                                class="test-case-remove-btn"
+                                                onclick="removeTestCase(this)"
+                                            >
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="test-case-body">
+
+
+                                        <div class="test-editor">
+
+                                            <div class="test-editor-header">
+
+                                                <div>
+
+                                                    <i class="fas fa-sign-in-alt"></i>
+
+                                                    INPUT
+
+                                                </div>
+
+                                                <span>
+                                                    STDIN
+                                                </span>
+
+                                            </div>
+
+
+                                            {{ formset.empty_form.input_data }}
+
+                                        </div>
+
+
+
+                                        <div class="test-editor">
+
+                                            <div class="test-editor-header">
+
+                                                <div>
+
+                                                    <i class="fas fa-sign-out-alt"></i>
+
+                                                    EXPECTED OUTPUT
+
+                                                </div>
+
+                                                <span>
+                                                    STDOUT
+                                                </span>
+
+                                            </div>
+
+
+                                            {{ formset.empty_form.expected_output }}
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {{ formset.empty_form.id }}
+
+
+                                    <div class="test-case-delete-field">
+
+                                        {{ formset.empty_form.DELETE }}
+
+                                    </div>
+
+                                </div>
+
+                            </template>
+
+
+
+                            <!-- ADD TEST CASE -->
+
+                            <button
+                                type="button"
+                                id="add-test-case-btn"
+                                class="add-test-case-btn"
+                            >
+
+                                <span class="add-test-icon">
+
+                                    <i class="fas fa-plus"></i>
+
+                                </span>
+
+
+                                <span class="add-test-text">
+                                    Add Test Case
+                                </span>
+
+
+                                <span class="add-test-subtext">
+                                    Add another input / output pair
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                         FORM ERROR
+                    ================================================== -->
+
+                    {% if form.non_field_errors %}
+
+                        <div class="problem-form-error-main">
+
+                            {{ form.non_field_errors }}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         ACTIONS
+                    ================================================== -->
+
+                    <div class="problem-create-actions">
+
+
+                        <div class="actions-info">
+
+                            <i class="fas fa-info-circle"></i>
+
+                            <span>
+                                Problem will be created as
+                                <strong>Draft</strong>
+                            </span>
+
+                        </div>
+
+
+                        <div class="actions-buttons">
+
+                            <a
+                                href="{% url 'classroom_detail' classroom.id %}"
+                                class="problem-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+                            <a
+                                href="{% url 'import_problem_package' classroom.id %}"
+                                class="problem-import-btn"
+                            >
+                                <i class="fas fa-file-import"></i>
+                                Import Package
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="problem-create-btn"
+                            >
+                                <i class="fas fa-plus"></i>
+                                Create Problem
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script src="{% static 'js/problem-create.js' %}"></script>
+
+{% endblock %}

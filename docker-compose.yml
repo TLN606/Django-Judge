@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: minijudge
+      POSTGRES_USER: minijudge
+      POSTGRES_PASSWORD: minijudge
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U minijudge -d minijudge"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: "doi-khi-deploy-that"
+      DEBUG: "1"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+      DATABASE_URL: "postgres://minijudge:minijudge@db:5432/minijudge"
+      SEED_DEMO: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
