@@ -21,4 +21,5 @@ RUN chmod +x docker-entrypoint.sh \
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "60"]
+# Render đặt biến PORT (mặc định 10000); chạy local/Docker Compose dùng 8000
+CMD ["sh", "-c", "gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2 --timeout 60"]
